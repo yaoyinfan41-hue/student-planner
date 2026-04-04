@@ -1,21 +1,16 @@
 let todos = [];
 
 function addTodo() {
-  const text = document.getElementById("todoInput").value;
-  const date = document.getElementById("dateInput").value;
+  const input = document.getElementById("todoInput");
+  const text = input.value;
 
   if (text === "") return;
 
-  todos.push({
-    text: text,
-    date: date
-  });
+  todos.push(text);
+  input.value = "";
 
   saveTodos();
   renderTodos();
-
-  document.getElementById("todoInput").value = "";
-  document.getElementById("dateInput").value = "";
 }
 
 function renderTodos() {
@@ -23,18 +18,21 @@ function renderTodos() {
   list.innerHTML = "";
 
   todos.forEach((todo, index) => {
-    // 古いデータは無視
-    if (typeof todo === "string") return;
-
     const li = document.createElement("li");
 
     li.innerHTML = `
-      ${todo.text}（締切: ${todo.date || "なし"}）
+      ${todo}
       <button onclick="deleteTodo(${index})">削除</button>
     `;
 
     list.appendChild(li);
   });
+}
+
+function deleteTodo(index) {
+  todos.splice(index, 1);
+  saveTodos();
+  renderTodos();
 }
 
 function saveTodos() {
@@ -45,9 +43,6 @@ function loadTodos() {
   const saved = localStorage.getItem("todos");
   if (saved) {
     todos = JSON.parse(saved);
-
-    // 古い形式削除
-    todos = todos.filter(todo => typeof todo !== "string");
   }
 }
 
