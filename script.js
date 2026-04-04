@@ -1,26 +1,21 @@
-﻿function save() {
-  const text = document.getElementById("diary").value;
-  localStorage.setItem("diary", text);
-}
-
-window.onload = function() {
-  const saved = localStorage.getItem("diary");
-  document.getElementById("diary").value = saved || "";
-}
-
 let todos = [];
 
 function addTodo() {
-  const input = document.getElementById("todoInput");
-  const text = input.value;
+  const text = document.getElementById("todoInput").value;
+  const date = document.getElementById("dateInput").value;
 
   if (text === "") return;
 
-  todos.push(text);
-  input.value = "";
+  todos.push({
+    text: text,
+    date: date
+  });
 
   saveTodos();
   renderTodos();
+
+  document.getElementById("todoInput").value = "";
+  document.getElementById("dateInput").value = "";
 }
 
 function renderTodos() {
@@ -31,7 +26,7 @@ function renderTodos() {
     const li = document.createElement("li");
 
     li.innerHTML = `
-      ${todo}
+      ${todo.text}（締切: ${todo.date || "なし"}）
       <button onclick="deleteTodo(${index})">削除</button>
     `;
 
