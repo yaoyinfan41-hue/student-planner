@@ -45,6 +45,9 @@ function loadTodos() {
   const saved = localStorage.getItem("todos");
   if (saved) {
     todos = JSON.parse(saved);
+
+    // 古い形式削除
+    todos = todos.filter(todo => typeof todo !== "string");
   }
 }
 
