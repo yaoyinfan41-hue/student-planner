@@ -25,19 +25,24 @@ function renderTodos() {
   todos.forEach((todo, index) => {
     const li = document.createElement("li");
 
+    let text;
+    let date;
+
+    if (typeof todo === "string") {
+      text = todo;
+      date = "なし";
+    } else {
+      text = todo.text;
+      date = todo.date || "なし";
+    }
+
     li.innerHTML = `
-      ${todo.text}（締切: ${todo.date || "なし"}）
+      ${text}（締切: ${date}）
       <button onclick="deleteTodo(${index})">削除</button>
     `;
 
     list.appendChild(li);
   });
-}
-
-function deleteTodo(index) {
-  todos.splice(index, 1);
-  saveTodos();
-  renderTodos();
 }
 
 function saveTodos() {
