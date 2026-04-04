@@ -23,21 +23,13 @@ function renderTodos() {
   list.innerHTML = "";
 
   todos.forEach((todo, index) => {
+    // 古いデータは無視
+    if (typeof todo === "string") return;
+
     const li = document.createElement("li");
 
-    let text;
-    let date;
-
-    if (typeof todo === "string") {
-      text = todo;
-      date = "なし";
-    } else {
-      text = todo.text;
-      date = todo.date || "なし";
-    }
-
     li.innerHTML = `
-      ${text}（締切: ${date}）
+      ${todo.text}（締切: ${todo.date || "なし"}）
       <button onclick="deleteTodo(${index})">削除</button>
     `;
 
