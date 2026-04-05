@@ -1,5 +1,5 @@
 // ========================
-// 日記（日付ごと）
+// 日記（複数保存対応）
 // ========================
 
 let diaries = {};
@@ -8,11 +8,18 @@ function saveDiary() {
   const date = document.getElementById("diaryDate").value;
   const text = document.getElementById("diary").value;
 
-  if (!date) return;
+  if (!date || !text) return;
 
-  diaries[date] = text;
+  // 日付がなければ配列作る
+  if (!diaries[date]) {
+    diaries[date] = [];
+  }
+
+  diaries[date].push(text);
 
   localStorage.setItem("diaries", JSON.stringify(diaries));
+
+  document.getElementById("diary").value = "";
 
   renderDiaries();
 }
@@ -30,17 +37,22 @@ function renderDiaries() {
   list.innerHTML = "";
 
   Object.keys(diaries).forEach(date => {
-    const li = document.createElement("li");
 
-    li.innerHTML = `
-      <strong>${date}</strong><br>
-      ${diaries[date]}
-    `;
+    diaries[date].forEach(text => {
 
-    list.appendChild(li);
+      const li = document.createElement("li");
+
+      li.innerHTML = `
+        <strong>${date}</strong><br>
+        ${text}
+      `;
+
+      list.appendChild(li);
+
+    });
+
   });
 }
-
 
 // ========================
 // ToDo（締切付き）
