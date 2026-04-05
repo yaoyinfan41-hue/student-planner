@@ -1,5 +1,5 @@
 // ========================
-// 日記（複数保存対応）
+// 日記（複数・安全版）
 // ========================
 
 let diaries = {};
@@ -10,9 +10,13 @@ function saveDiary() {
 
   if (!date || !text) return;
 
-  // 日付がなければ配列作る
+  // 古い形式対応
   if (!diaries[date]) {
     diaries[date] = [];
+  }
+
+  if (!Array.isArray(diaries[date])) {
+    diaries[date] = [diaries[date]];
   }
 
   diaries[date].push(text);
@@ -38,8 +42,13 @@ function renderDiaries() {
 
   Object.keys(diaries).forEach(date => {
 
-    diaries[date].forEach(text => {
+    let entries = diaries[date];
 
+    if (!Array.isArray(entries)) {
+      entries = [entries];
+    }
+
+    entries.forEach(text => {
       const li = document.createElement("li");
 
       li.innerHTML = `
@@ -48,79 +57,6 @@ function renderDiaries() {
       `;
 
       list.appendChild(li);
-
     });
-
   });
 }
-
-// ========================
-// ToDo（締切付き）
-// ========================
-
-let todos = [];
-
-function addTodo() {
-  const text = document.getElementById("todoInput").value;
-  const date = document.getElementById("dateInput").value;
-
-  if (!text) return;
-
-  todos.push({
-    text: text,
-    date: date
-  });
-
-  saveTodos();
-  renderTodos();
-
-  document.getElementById("todoInput").value = "";
-  document.getElementById("dateInput").value = "";
-}
-
-function deleteTodo(index) {
-  todos.splice(index, 1);
-  saveTodos();
-  renderTodos();
-}
-
-function renderTodos() {
-  const list = document.getElementById("todoList");
-  list.innerHTML = "";
-
-  todos.forEach((todo, index) => {
-    const li = document.createElement("li");
-
-    li.innerHTML = `
-      ${todo.text}（締切: ${todo.date || "なし"}）
-      <button onclick="deleteTodo(${index})">削除</button>
-    `;
-
-    list.appendChild(li);
-  });
-}
-
-function saveTodos() {
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-function loadTodos() {
-  const saved = localStorage.getItem("todos");
-
-  if (saved) {
-    todos = JSON.parse(saved);
-  }
-}
-
-
-// ========================
-// 初期読み込み
-// ========================
-
-window.onload = function () {
-  loadDiary();
-  renderDiaries();
-
-  loadTodos();
-  renderTodos();
-};
