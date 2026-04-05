@@ -25,7 +25,6 @@ function saveDiary() {
 
 function loadDiary() {
   const saved = localStorage.getItem("diaries");
-
   if (saved) {
     diaries = JSON.parse(saved);
   }
@@ -37,7 +36,6 @@ function renderDiaries() {
 
   Object.keys(diaries).forEach(date => {
     diaries[date].forEach(text => {
-
       const li = document.createElement("li");
 
       li.innerHTML = `
@@ -46,7 +44,6 @@ function renderDiaries() {
       `;
 
       list.appendChild(li);
-
     });
   });
 }
@@ -59,8 +56,11 @@ function renderDiaries() {
 let todos = [];
 
 function addTodo() {
-  const text = document.getElementById("todoInput").value;
-  const date = document.getElementById("dateInput").value;
+  const input = document.getElementById("todoInput");
+  const dateInput = document.getElementById("dateInput");
+
+  const text = input.value;
+  const date = dateInput.value;
 
   if (!text) return;
 
@@ -72,8 +72,8 @@ function addTodo() {
   saveTodos();
   renderTodos();
 
-  document.getElementById("todoInput").value = "";
-  document.getElementById("dateInput").value = "";
+  input.value = "";
+  dateInput.value = "";
 }
 
 function deleteTodo(index) {
