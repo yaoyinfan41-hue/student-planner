@@ -86,11 +86,24 @@ function renderTodos() {
   const list = document.getElementById("todoList");
   list.innerHTML = "";
 
+  const today = new Date();
+
   todos.forEach((todo, index) => {
     const li = document.createElement("li");
 
+    let deadlineText = "なし";
+
+    if (todo.date) {
+      const deadline = new Date(todo.date);
+      const diff = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+
+      if (diff === 0) deadlineText = "今日";
+      else if (diff > 0) deadlineText = `あと${diff}日`;
+      else deadlineText = "期限切れ";
+    }
+
     li.innerHTML = `
-      ${todo.text}（締切: ${todo.date || "なし"}）
+      ${todo.text}（${deadlineText}）
       <button onclick="deleteTodo(${index})">削除</button>
     `;
 
