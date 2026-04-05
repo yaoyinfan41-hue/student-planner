@@ -1,36 +1,63 @@
 // ========================
-// 日記機能
+// 日記（日付ごと）
 // ========================
+
+let diaries = {};
+
 function saveDiary() {
+  const date = document.getElementById("diaryDate").value;
   const text = document.getElementById("diary").value;
-  localStorage.setItem("diary", text);
+
+  if (!date) return;
+
+  diaries[date] = text;
+
+  localStorage.setItem("diaries", JSON.stringify(diaries));
+
+  renderDiaries();
 }
 
 function loadDiary() {
-  const saved = localStorage.getItem("diary");
+  const saved = localStorage.getItem("diaries");
+
   if (saved) {
-    document.getElementById("diary").value = saved;
+    diaries = JSON.parse(saved);
   }
+}
+
+function renderDiaries() {
+  const list = document.getElementById("diaryList");
+  list.innerHTML = "";
+
+  Object.keys(diaries).forEach(date => {
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+      <strong>${date}</strong><br>
+      ${diaries[date]}
+    `;
+
+    list.appendChild(li);
+  });
 }
 
 
 // ========================
 // ToDo（締切付き）
 // ========================
+
 let todos = [];
 
 function addTodo() {
   const text = document.getElementById("todoInput").value;
   const date = document.getElementById("dateInput").value;
 
-  if (text === "") return;
+  if (!text) return;
 
-  const todo = {
+  todos.push({
     text: text,
     date: date
-  };
-
-  todos.push(todo);
+  });
 
   saveTodos();
   renderTodos();
@@ -52,10 +79,8 @@ function renderTodos() {
   todos.forEach((todo, index) => {
     const li = document.createElement("li");
 
-    const dateText = todo.date ? todo.date : "なし";
-
     li.innerHTML = `
-      ${todo.text}（締切: ${dateText}）
+      ${todo.text}（締切: ${todo.date || "なし"}）
       <button onclick="deleteTodo(${index})">削除</button>
     `;
 
@@ -72,8 +97,6 @@ function loadTodos() {
 
   if (saved) {
     todos = JSON.parse(saved);
-  } else {
-    todos = [];
   }
 }
 
@@ -81,8 +104,11 @@ function loadTodos() {
 // ========================
 // 初期読み込み
 // ========================
+
 window.onload = function () {
   loadDiary();
+  renderDiaries();
+
   loadTodos();
   renderTodos();
 };
