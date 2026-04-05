@@ -142,3 +142,39 @@ window.onload = function () {
   loadTodos();
   renderTodos();
 };
+
+// ========================
+// 時間割
+// ========================
+
+const days = ["mon","tue","wed","thu","fri"];
+
+function saveTimetable() {
+  const timetable = {};
+
+  days.forEach(day => {
+    timetable[day] = [];
+
+    for(let i=1;i<=6;i++){
+      const value = document.getElementById(day+i).value;
+      timetable[day].push(value);
+    }
+  });
+
+  localStorage.setItem("timetable", JSON.stringify(timetable));
+}
+
+function loadTimetable() {
+  const saved = localStorage.getItem("timetable");
+  if(!saved) return;
+
+  const timetable = JSON.parse(saved);
+
+  days.forEach(day=>{
+    timetable[day].forEach((subject,i)=>{
+      document.getElementById(day+(i+1)).value = subject;
+    });
+  });
+}
+
+window.addEventListener("load", loadTimetable);
