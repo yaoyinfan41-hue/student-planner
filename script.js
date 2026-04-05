@@ -88,7 +88,16 @@ function renderTodos() {
 
   const today = new Date();
 
-  todos.forEach((todo, index) => {
+  // 締切順にソート
+  const sortedTodos = [...todos].sort((a, b) => {
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return new Date(a.date) - new Date(b.date);
+  });
+
+  sortedTodos.forEach((todo) => {
+    const index = todos.indexOf(todo);
+
     const li = document.createElement("li");
 
     let deadlineText = "なし";
@@ -110,7 +119,6 @@ function renderTodos() {
     list.appendChild(li);
   });
 }
-
 function saveTodos() {
   localStorage.setItem("todos", JSON.stringify(todos));
 }
