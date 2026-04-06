@@ -21,6 +21,11 @@ if(el){
 data[day+i] = el.value;
 }
 
+const room = document.getElementById(day+i+"_room");
+if(room){
+data[day+i+"_room"] = room.value;
+}
+
 });
 
 }
@@ -53,6 +58,11 @@ const el = document.getElementById(day+i);
 
 if(el && data[day+i]){
 el.value = data[day+i];
+}
+
+const room = document.getElementById(day+i+"_room");
+if(room && data[day+i+"_room"]){
+room.value = data[day+i+"_room"];
 }
 
 });
