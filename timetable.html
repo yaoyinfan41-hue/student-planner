@@ -7,7 +7,9 @@
 
 <h1>時間割</h1>
 
-<table border="1">
+<button onclick="toggleWeekend()">土日表示</button>
+
+<table border="1" id="timetable">
 <tr>
 <th></th>
 <th>月</th>
@@ -15,15 +17,21 @@
 <th>水</th>
 <th>木</th>
 <th>金</th>
+<th class="weekend" style="display:none">土</th>
+<th class="weekend" style="display:none">日</th>
 </tr>
 
 <tr>
-<th>1限</th>
+<th>1限<br><input id="time1" placeholder="9:00-10:30"></th>
+
 <td><input id="mon1"></td>
 <td><input id="tue1"></td>
 <td><input id="wed1"></td>
 <td><input id="thu1"></td>
 <td><input id="fri1"></td>
+
+<td class="weekend" style="display:none"><input id="sat1"></td>
+<td class="weekend" style="display:none"><input id="sun1"></td>
 </tr>
 
 <tr>
