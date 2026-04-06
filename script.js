@@ -203,3 +203,29 @@ function toggleWeekend(){
 }
 
 window.addEventListener("load", loadTimetable);
+
+// 土曜追加
+function addSaturday(){
+document.querySelectorAll(".sat").forEach(el=>{
+el.style.display = "";
+});
+}
+
+// 日曜追加
+function addSunday(){
+document.querySelectorAll(".sun").forEach(el=>{
+el.style.display = "";
+});
+}
+
+// 出席
+function addAttend(id){
+const el = document.getElementById(id+"_attend");
+el.textContent = parseInt(el.textContent)+1;
+}
+
+// 欠席
+function addAbsent(id){
+const el = document.getElementById(id+"_absent");
+el.textContent = parseInt(el.textContent)+1;
+}
