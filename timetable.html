@@ -13,7 +13,8 @@
 
 <br><br>
 
-<table border="1" id="timetable">
+<table border="1">
+
 <tr>
 <th>時限</th>
 <th>月</th>
@@ -26,111 +27,52 @@
 </tr>
 
 <tr>
-<th>
-1限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
-</th>
+<th>1限</th>
+<td>授業<input id="mon1"><br>教室<input id="mon1_room"><br>
+出席<button onclick="addAttend('mon1')">+</button>
+<button onclick="subAttend('mon1')">-</button>
+<span id="mon1_attend">0</span><br>
+欠席<button onclick="addAbsent('mon1')">+</button>
+<button onclick="subAbsent('mon1')">-</button>
+<span id="mon1_absent">0</span><br>
+<textarea id="mon1_memo"></textarea></td>
 
-<td><input id="mon1"></td>
-<td><input id="tue1"></td>
-<td><input id="wed1"></td>
-<td><input id="thu1"></td>
-<td><input id="fri1"></td>
+<td>授業<input id="tue1"><br>教室<input id="tue1_room"><br>
+出席<button onclick="addAttend('tue1')">+</button>
+<button onclick="subAttend('tue1')">-</button>
+<span id="tue1_attend">0</span><br>
+欠席<button onclick="addAbsent('tue1')">+</button>
+<button onclick="subAbsent('tue1')">-</button>
+<span id="tue1_absent">0</span><br>
+<textarea id="tue1_memo"></textarea></td>
 
-<td class="weekend" style="display:none"><input id="sat1"></td>
-<td class="weekend" style="display:none"><input id="sun1"></td>
-</tr>
+<td>授業<input id="wed1"><br>教室<input id="wed1_room"><br>
+出席<button onclick="addAttend('wed1')">+</button>
+<button onclick="subAttend('wed1')">-</button>
+<span id="wed1_attend">0</span><br>
+欠席<button onclick="addAbsent('wed1')">+</button>
+<button onclick="subAbsent('wed1')">-</button>
+<span id="wed1_absent">0</span><br>
+<textarea id="wed1_memo"></textarea></td>
 
-<tr>
-<th>
-2限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
-</th>
+<td>授業<input id="thu1"><br>教室<input id="thu1_room"><br>
+出席<button onclick="addAttend('thu1')">+</button>
+<button onclick="subAttend('thu1')">-</button>
+<span id="thu1_attend">0</span><br>
+欠席<button onclick="addAbsent('thu1')">+</button>
+<button onclick="subAbsent('thu1')">-</button>
+<span id="thu1_absent">0</span><br>
+<textarea id="thu1_memo"></textarea></td>
 
-<td><input id="mon1"></td>
-<td><input id="tue1"></td>
-<td><input id="wed1"></td>
-<td><input id="thu1"></td>
-<td><input id="fri1"></td>
+<td>授業<input id="fri1"><br>教室<input id="fri1_room"><br>
+出席<button onclick="addAttend('fri1')">+</button>
+<button onclick="subAttend('fri1')">-</button>
+<span id="fri1_attend">0</span><br>
+欠席<button onclick="addAbsent('fri1')">+</button>
+<button onclick="subAbsent('fri1')">-</button>
+<span id="fri1_absent">0</span><br>
+<textarea id="fri1_memo"></textarea></td>
 
-<td class="weekend" style="display:none"><input id="sat1"></td>
-<td class="weekend" style="display:none"><input id="sun1"></td>
-</tr>
-
-<tr>
-<th>
-3限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
-</th>
-
-<td><input id="mon1"></td>
-<td><input id="tue1"></td>
-<td><input id="wed1"></td>
-<td><input id="thu1"></td>
-<td><input id="fri1"></td>
-
-<td class="weekend" style="display:none"><input id="sat1"></td>
-<td class="weekend" style="display:none"><input id="sun1"></td>
-</tr>
-  
-<tr>
-<th>
-4限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
-</th>
-
-<td><input id="mon1"></td>
-<td><input id="tue1"></td>
-<td><input id="wed1"></td>
-<td><input id="thu1"></td>
-<td><input id="fri1"></td>
-
-<td class="weekend" style="display:none"><input id="sat1"></td>
-<td class="weekend" style="display:none"><input id="sun1"></td>
-</tr>
-
-<tr>
-<th>
-5限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
-</th>
-
-<td><input id="mon1"></td>
-<td><input id="tue1"></td>
-<td><input id="wed1"></td>
-<td><input id="thu1"></td>
-<td><input id="fri1"></td>
-
-<td class="weekend" style="display:none"><input id="sat1"></td>
-<td class="weekend" style="display:none"><input id="sun1"></td>
-</tr>
-
-<tr>
-<th>
-6限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
-</th>
-
-<td><input id="mon1"></td>
-<td><input id="tue1"></td>
-<td><input id="wed1"></td>
-<td><input id="thu1"></td>
-<td><input id="fri1"></td>
-
-<td class="weekend" style="display:none"><input id="sat1"></td>
-<td class="weekend" style="display:none"><input id="sun1"></td>
 </tr>
 
 </table>
