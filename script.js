@@ -148,28 +148,35 @@ saveTimetable();
 
 
 
+
 // ========================
 // 土日表示
 // ========================
 
+let weekendVisible = false;
+
 function toggleWeekend(){
+    weekendVisible = !weekendVisible;
 
-document.querySelectorAll(".weekend").forEach(el=>{
-
-if(el.style.display==="none"){
-el.style.display="";
-}else{
-el.style.display="none";
+    document.querySelectorAll(".weekend").forEach(el=>{
+        el.style.display = weekendVisible ? "" : "none";
+    });
 }
-
-});
-
-}
-
 
 
 // ========================
 // 初期読み込み
 // ========================
 
-window.onload = loadTimetable;
+// ========================
+// 初期読み込み
+// ========================
+
+window.onload = function(){
+    loadTimetable();
+
+    // 最初は土日を非表示
+    document.querySelectorAll(".weekend").forEach(el=>{
+        el.style.display = "none";
+    });
+};
