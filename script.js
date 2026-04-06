@@ -1,3 +1,4 @@
+<script>
 const days = ["mon","tue","wed","thu","fri","sat","sun"];
 
 
@@ -180,3 +181,6 @@ window.onload = function(){
         el.style.display = "none";
     });
 };
+</script>
+</body>
+</html>
