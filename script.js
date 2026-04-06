@@ -11,6 +11,9 @@ const data = {};
 
 for(let i=1;i<=6;i++){
 
+data["start"+i] = document.getElementById("start"+i)?.value;
+data["end"+i] = document.getElementById("end"+i)?.value;
+
 days.forEach(day=>{
 
 const el = document.getElementById(day+i);
@@ -38,6 +41,12 @@ const data = JSON.parse(localStorage.getItem("timetable") || "{}");
 
 for(let i=1;i<=6;i++){
 
+if(document.getElementById("start"+i))
+document.getElementById("start"+i).value = data["start"+i] || "";
+
+if(document.getElementById("end"+i))
+document.getElementById("end"+i).value = data["end"+i] || "";
+  
 days.forEach(day=>{
 
 const el = document.getElementById(day+i);
