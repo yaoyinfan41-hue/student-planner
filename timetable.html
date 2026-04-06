@@ -9,17 +9,13 @@
 <h1>時間割</h1>
 
 <button onclick="saveTimetable()">保存</button>
-<button onclick="showToday()">今日の授業</button>
-<button onclick="showAll()">全部表示</button>
 <button onclick="toggleWeekend()">土日表示</button>
-
-<div id="nextClass"></div>
 
 <br><br>
 
 <table border="1" id="timetable">
 <tr>
-<th></th>
+<th>時限</th>
 <th>月</th>
 <th>火</th>
 <th>水</th>
@@ -28,6 +24,73 @@
 <th class="weekend" style="display:none">土</th>
 <th class="weekend" style="display:none">日</th>
 </tr>
+
+<tr>
+<th>1限</th>
+<td><input id="mon1"></td>
+<td><input id="tue1"></td>
+<td><input id="wed1"></td>
+<td><input id="thu1"></td>
+<td><input id="fri1"></td>
+<td class="weekend" style="display:none"><input id="sat1"></td>
+<td class="weekend" style="display:none"><input id="sun1"></td>
+</tr>
+
+<tr>
+<th>2限</th>
+<td><input id="mon2"></td>
+<td><input id="tue2"></td>
+<td><input id="wed2"></td>
+<td><input id="thu2"></td>
+<td><input id="fri2"></td>
+<td class="weekend" style="display:none"><input id="sat2"></td>
+<td class="weekend" style="display:none"><input id="sun2"></td>
+</tr>
+
+<tr>
+<th>3限</th>
+<td><input id="mon3"></td>
+<td><input id="tue3"></td>
+<td><input id="wed3"></td>
+<td><input id="thu3"></td>
+<td><input id="fri3"></td>
+<td class="weekend" style="display:none"><input id="sat3"></td>
+<td class="weekend" style="display:none"><input id="sun3"></td>
+</tr>
+
+<tr>
+<th>4限</th>
+<td><input id="mon4"></td>
+<td><input id="tue4"></td>
+<td><input id="wed4"></td>
+<td><input id="thu4"></td>
+<td><input id="fri4"></td>
+<td class="weekend" style="display:none"><input id="sat4"></td>
+<td class="weekend" style="display:none"><input id="sun4"></td>
+</tr>
+
+<tr>
+<th>5限</th>
+<td><input id="mon5"></td>
+<td><input id="tue5"></td>
+<td><input id="wed5"></td>
+<td><input id="thu5"></td>
+<td><input id="fri5"></td>
+<td class="weekend" style="display:none"><input id="sat5"></td>
+<td class="weekend" style="display:none"><input id="sun5"></td>
+</tr>
+
+<tr>
+<th>6限</th>
+<td><input id="mon6"></td>
+<td><input id="tue6"></td>
+<td><input id="wed6"></td>
+<td><input id="thu6"></td>
+<td><input id="fri6"></td>
+<td class="weekend" style="display:none"><input id="sat6"></td>
+<td class="weekend" style="display:none"><input id="sun6"></td>
+</tr>
+
 </table>
 
 <script src="script.js"></script>
