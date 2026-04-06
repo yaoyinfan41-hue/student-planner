@@ -9,93 +9,129 @@
 <h1>時間割</h1>
 
 <button onclick="saveTimetable()">保存</button>
-
-<button onclick="showSat()">土曜表示</button>
-<button onclick="hideSat()">土曜非表示</button>
-
-<button onclick="showSun()">日曜表示</button>
-<button onclick="hideSun()">日曜非表示</button>
+<button onclick="toggleWeekend()">土日表示</button>
 
 <br><br>
 
 <table border="1" id="timetable">
-
 <tr>
-<th></th>
+<th>時限</th>
 <th>月</th>
 <th>火</th>
 <th>水</th>
 <th>木</th>
 <th>金</th>
-<th class="sat" style="display:none">土</th>
-<th class="sun" style="display:none">日</th>
+<th class="weekend" style="display:none">土</th>
+<th class="weekend" style="display:none">日</th>
 </tr>
 
-<script>
-
-const days=["mon","tue","wed","thu","fri","sat","sun"];
-
-for(let i=1;i<=6;i++){
-
-document.write(`
 <tr>
-
 <th>
-${i}限<br>
-<input type="time" id="start${i}">
-<br>
-<input type="time" id="end${i}">
+1限<br>
+<input type="time" id="start1">
+~
+<input type="time" id="end1">
 </th>
 
-${days.map(day=>{
+<td><input id="mon1"></td>
+<td><input id="tue1"></td>
+<td><input id="wed1"></td>
+<td><input id="thu1"></td>
+<td><input id="fri1"></td>
 
-let cls="";
-if(day==="sat") cls='class="sat" style="display:none"';
-if(day==="sun") cls='class="sun" style="display:none"';
-
-return `<td ${cls}>${cell(day,i)}</td>`
-
-}).join("")}
-
+<td class="weekend" style="display:none"><input id="sat1"></td>
+<td class="weekend" style="display:none"><input id="sun1"></td>
 </tr>
-`)
 
-}
+<tr>
+<th>
+2限<br>
+<input type="time" id="start1">
+~
+<input type="time" id="end1">
+</th>
 
-function cell(day,i){
+<td><input id="mon1"></td>
+<td><input id="tue1"></td>
+<td><input id="wed1"></td>
+<td><input id="thu1"></td>
+<td><input id="fri1"></td>
 
-return `
+<td class="weekend" style="display:none"><input id="sat1"></td>
+<td class="weekend" style="display:none"><input id="sun1"></td>
+</tr>
 
-授業<br>
-<input id="${day}${i}">
+<tr>
+<th>
+3限<br>
+<input type="time" id="start1">
+~
+<input type="time" id="end1">
+</th>
 
-<br>
+<td><input id="mon1"></td>
+<td><input id="tue1"></td>
+<td><input id="wed1"></td>
+<td><input id="thu1"></td>
+<td><input id="fri1"></td>
 
-教室<br>
-<input id="${day}${i}_room">
+<td class="weekend" style="display:none"><input id="sat1"></td>
+<td class="weekend" style="display:none"><input id="sun1"></td>
+</tr>
+  
+<tr>
+<th>
+4限<br>
+<input type="time" id="start1">
+~
+<input type="time" id="end1">
+</th>
 
-<br>
+<td><input id="mon1"></td>
+<td><input id="tue1"></td>
+<td><input id="wed1"></td>
+<td><input id="thu1"></td>
+<td><input id="fri1"></td>
 
-出席
-<button type="button" onclick="addAttend('${day}${i}')">+</button>
-<button type="button" onclick="subAttend('${day}${i}')">-</button>
-<span id="${day}${i}_attend">0</span>
+<td class="weekend" style="display:none"><input id="sat1"></td>
+<td class="weekend" style="display:none"><input id="sun1"></td>
+</tr>
 
-<br>
+<tr>
+<th>
+5限<br>
+<input type="time" id="start1">
+~
+<input type="time" id="end1">
+</th>
 
-欠席
-<button type="button" onclick="addAbsent('${day}${i}')">+</button>
-<button type="button" onclick="subAbsent('${day}${i}')">-</button>
-<span id="${day}${i}_absent">0</span>
+<td><input id="mon1"></td>
+<td><input id="tue1"></td>
+<td><input id="wed1"></td>
+<td><input id="thu1"></td>
+<td><input id="fri1"></td>
 
-<br>
+<td class="weekend" style="display:none"><input id="sat1"></td>
+<td class="weekend" style="display:none"><input id="sun1"></td>
+</tr>
 
-<textarea id="${day}${i}_memo"></textarea>
+<tr>
+<th>
+6限<br>
+<input type="time" id="start1">
+~
+<input type="time" id="end1">
+</th>
 
-`
-}
+<td><input id="mon1"></td>
+<td><input id="tue1"></td>
+<td><input id="wed1"></td>
+<td><input id="thu1"></td>
+<td><input id="fri1"></td>
 
-</script>
+<td class="weekend" style="display:none"><input id="sat1"></td>
+<td class="weekend" style="display:none"><input id="sun1"></td>
+</tr>
 
 </table>
 
