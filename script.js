@@ -98,3 +98,31 @@ el.style.display="none";
 // ========================
 
 window.onload = loadTimetable;
+
+// 出席
+function addAttend(id){
+const el=document.getElementById(id+"_attend");
+el.textContent=parseInt(el.textContent)+1;
+saveTimetable();
+}
+
+function subAttend(id){
+const el=document.getElementById(id+"_attend");
+let n=parseInt(el.textContent);
+if(n>0) el.textContent=n-1;
+saveTimetable();
+}
+
+// 欠席
+function addAbsent(id){
+const el=document.getElementById(id+"_absent");
+el.textContent=parseInt(el.textContent)+1;
+saveTimetable();
+}
+
+function subAbsent(id){
+const el=document.getElementById(id+"_absent");
+let n=parseInt(el.textContent);
+if(n>0) el.textContent=n-1;
+saveTimetable();
+}
