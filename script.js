@@ -147,33 +147,58 @@ window.onload = function () {
 // 時間割
 // ========================
 
-const days = ["mon","tue","wed","thu","fri"];
+const days = ["mon","tue","wed","thu","fri","sat","sun"];
 
 function saveTimetable() {
   const timetable = {};
+  const times = {};
 
-  days.forEach(day => {
-    timetable[day] = [];
+  for(let i=1;i<=6;i++){
 
-    for(let i=1;i<=6;i++){
-      const value = document.getElementById(day+i).value;
-      timetable[day].push(value);
-    }
-  });
+    times[i] = document.getElementById("time"+i).value;
 
-  localStorage.setItem("timetable", JSON.stringify(timetable));
+    days.forEach(day=>{
+      const el = document.getElementById(day+i);
+      if(!el) return;
+
+      if(!timetable[day]) timetable[day]=[];
+
+      timetable[day][i] = el.value;
+    });
+  }
+
+  localStorage.setItem("timetable",JSON.stringify(timetable));
+  localStorage.setItem("times",JSON.stringify(times));
 }
 
-function loadTimetable() {
-  const saved = localStorage.getItem("timetable");
-  if(!saved) return;
+function loadTimetable(){
 
-  const timetable = JSON.parse(saved);
+  const timetable = JSON.parse(localStorage.getItem("timetable")||"{}");
+  const times = JSON.parse(localStorage.getItem("times")||"{}");
 
-  days.forEach(day=>{
-    timetable[day].forEach((subject,i)=>{
-      document.getElementById(day+(i+1)).value = subject;
+  for(let i=1;i<=6;i++){
+
+    const time = document.getElementById("time"+i);
+    if(time) time.value = times[i] || "";
+
+    days.forEach(day=>{
+      const el = document.getElementById(day+i);
+      if(el && timetable[day]){
+        el.value = timetable[day][i] || "";
+      }
     });
+  }
+}
+
+function toggleWeekend(){
+  const weekend = document.querySelectorAll(".weekend");
+
+  weekend.forEach(el=>{
+    if(el.style.display === "none"){
+      el.style.display = "";
+    }else{
+      el.style.display = "none";
+    }
   });
 }
 
