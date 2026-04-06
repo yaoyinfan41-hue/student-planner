@@ -229,3 +229,49 @@ function addAbsent(id){
 const el = document.getElementById(id+"_absent");
 el.textContent = parseInt(el.textContent)+1;
 }
+
+// ========================
+// 土日表示切り替え
+// ========================
+
+function toggleSaturday(){
+document.querySelectorAll(".sat").forEach(el=>{
+el.style.display = (el.style.display === "none") ? "" : "none";
+});
+}
+
+function toggleSunday(){
+document.querySelectorAll(".sun").forEach(el=>{
+el.style.display = (el.style.display === "none") ? "" : "none";
+});
+}
+
+// ========================
+// 出席
+// ========================
+
+function addAttend(id){
+const el = document.getElementById(id+"_attend");
+el.textContent = parseInt(el.textContent)+1;
+}
+
+function subAttend(id){
+const el = document.getElementById(id+"_attend");
+let num = parseInt(el.textContent);
+if(num>0) el.textContent = num-1;
+}
+
+// ========================
+// 欠席
+// ========================
+
+function addAbsent(id){
+const el = document.getElementById(id+"_absent");
+el.textContent = parseInt(el.textContent)+1;
+}
+
+function subAbsent(id){
+const el = document.getElementById(id+"_absent");
+let num = parseInt(el.textContent);
+if(num>0) el.textContent = num-1;
+}
