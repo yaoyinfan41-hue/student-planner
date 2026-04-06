@@ -7,8 +7,8 @@
 
 <h1>時間割</h1>
 
-<button onclick="addSaturday()">土曜追加</button>
-<button onclick="addSunday()">日曜追加</button>
+<button onclick="toggleSaturday()">土曜表示/非表示</button>
+<button onclick="toggleSunday()">日曜表示/非表示</button>
 
 <table border="1" id="timetable">
 
@@ -53,17 +53,23 @@ ${i}限<br>
 function cell(day,i){
 return `
 授業<input id="${day}${i}"><br>
+
 教室<input id="${day}${i}_room"><br>
 
 出席:
 <button onclick="addAttend('${day}${i}')">+</button>
+<button onclick="subAttend('${day}${i}')">-</button>
 <span id="${day}${i}_attend">0</span>
+
+<br>
 
 欠席:
 <button onclick="addAbsent('${day}${i}')">+</button>
+<button onclick="subAbsent('${day}${i}')">-</button>
 <span id="${day}${i}_absent">0</span>
 
 <br>
+
 <textarea id="${day}${i}_memo" placeholder="メモ"></textarea>
 `
 }
