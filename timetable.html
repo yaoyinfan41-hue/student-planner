@@ -18,7 +18,6 @@
 <br><br>
 
 <table border="1" id="timetable">
-
 <tr>
 <th></th>
 <th>月</th>
@@ -29,85 +28,6 @@
 <th class="weekend" style="display:none">土</th>
 <th class="weekend" style="display:none">日</th>
 </tr>
-
-<script>
-const days=["mon","tue","wed","thu","fri","sat","sun"];
-
-for(let i=1;i<=6;i++){
-
-document.write(`
-<tr>
-
-<th>
-${i}限<br>
-<input type="time" id="start${i}">
-<br>
-<input type="time" id="end${i}">
-</th>
-
-${days.map(day=>{
-
-const weekend=(day==="sat"||day==="sun")?
-'class="weekend" style="display:none"' : "";
-
-return `
-<td ${weekend}>
-${cell(day,i)}
-</td>
-`
-
-}).join("")}
-
-</tr>
-`)
-}
-
-function cell(day,i){
-return `
-
-<select id="${day}${i}_color">
-<option value="">通常</option>
-<option value="#ffd6d6">必修</option>
-<option value="#d6e4ff">選択</option>
-<option value="#d6ffd6">実験</option>
-</select>
-
-<br>
-
-授業<br>
-<input id="${day}${i}">
-
-<br>
-
-教室<br>
-<input id="${day}${i}_room">
-
-<br>
-
-休講 <input type="checkbox" id="${day}${i}_cancel">
-
-<br>
-
-出席
-<button onclick="addAttend('${day}${i}')">+</button>
-<button onclick="subAttend('${day}${i}')">-</button>
-<span id="${day}${i}_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('${day}${i}')">+</button>
-<button onclick="subAbsent('${day}${i}')">-</button>
-<span id="${day}${i}_absent">0</span>
-
-<br>
-
-<textarea id="${day}${i}_memo" placeholder="メモ"></textarea>
-
-`
-}
-</script>
-
 </table>
 
 <script src="script.js"></script>
