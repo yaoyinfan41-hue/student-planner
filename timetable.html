@@ -9,71 +9,93 @@
 <h1>時間割</h1>
 
 <button onclick="saveTimetable()">保存</button>
-<button onclick="toggleWeekend()">土日表示</button>
+
+<button onclick="showSat()">土曜表示</button>
+<button onclick="hideSat()">土曜非表示</button>
+
+<button onclick="showSun()">日曜表示</button>
+<button onclick="hideSun()">日曜非表示</button>
 
 <br><br>
 
-<table border="1">
+<table border="1" id="timetable">
 
 <tr>
-<th>時限</th>
+<th></th>
 <th>月</th>
 <th>火</th>
 <th>水</th>
 <th>木</th>
 <th>金</th>
-<th class="weekend" style="display:none">土</th>
-<th class="weekend" style="display:none">日</th>
+<th class="sat" style="display:none">土</th>
+<th class="sun" style="display:none">日</th>
 </tr>
 
+<script>
+
+const days=["mon","tue","wed","thu","fri","sat","sun"];
+
+for(let i=1;i<=6;i++){
+
+document.write(`
 <tr>
-<th>1限</th>
-<td>授業<input id="mon1"><br>教室<input id="mon1_room"><br>
-出席<button onclick="addAttend('mon1')">+</button>
-<button onclick="subAttend('mon1')">-</button>
-<span id="mon1_attend">0</span><br>
-欠席<button onclick="addAbsent('mon1')">+</button>
-<button onclick="subAbsent('mon1')">-</button>
-<span id="mon1_absent">0</span><br>
-<textarea id="mon1_memo"></textarea></td>
 
-<td>授業<input id="tue1"><br>教室<input id="tue1_room"><br>
-出席<button onclick="addAttend('tue1')">+</button>
-<button onclick="subAttend('tue1')">-</button>
-<span id="tue1_attend">0</span><br>
-欠席<button onclick="addAbsent('tue1')">+</button>
-<button onclick="subAbsent('tue1')">-</button>
-<span id="tue1_absent">0</span><br>
-<textarea id="tue1_memo"></textarea></td>
+<th>
+${i}限<br>
+<input type="time" id="start${i}">
+<br>
+<input type="time" id="end${i}">
+</th>
 
-<td>授業<input id="wed1"><br>教室<input id="wed1_room"><br>
-出席<button onclick="addAttend('wed1')">+</button>
-<button onclick="subAttend('wed1')">-</button>
-<span id="wed1_attend">0</span><br>
-欠席<button onclick="addAbsent('wed1')">+</button>
-<button onclick="subAbsent('wed1')">-</button>
-<span id="wed1_absent">0</span><br>
-<textarea id="wed1_memo"></textarea></td>
+${days.map(day=>{
 
-<td>授業<input id="thu1"><br>教室<input id="thu1_room"><br>
-出席<button onclick="addAttend('thu1')">+</button>
-<button onclick="subAttend('thu1')">-</button>
-<span id="thu1_attend">0</span><br>
-欠席<button onclick="addAbsent('thu1')">+</button>
-<button onclick="subAbsent('thu1')">-</button>
-<span id="thu1_absent">0</span><br>
-<textarea id="thu1_memo"></textarea></td>
+let cls="";
+if(day==="sat") cls='class="sat" style="display:none"';
+if(day==="sun") cls='class="sun" style="display:none"';
 
-<td>授業<input id="fri1"><br>教室<input id="fri1_room"><br>
-出席<button onclick="addAttend('fri1')">+</button>
-<button onclick="subAttend('fri1')">-</button>
-<span id="fri1_attend">0</span><br>
-欠席<button onclick="addAbsent('fri1')">+</button>
-<button onclick="subAbsent('fri1')">-</button>
-<span id="fri1_absent">0</span><br>
-<textarea id="fri1_memo"></textarea></td>
+return `<td ${cls}>${cell(day,i)}</td>`
+
+}).join("")}
 
 </tr>
+`)
+
+}
+
+function cell(day,i){
+
+return `
+
+授業<br>
+<input id="${day}${i}">
+
+<br>
+
+教室<br>
+<input id="${day}${i}_room">
+
+<br>
+
+出席
+<button onclick="addAttend('${day}${i}')">+</button>
+<button onclick="subAttend('${day}${i}')">-</button>
+<span id="${day}${i}_attend">0</span>
+
+<br>
+
+欠席
+<button onclick="addAbsent('${day}${i}')">+</button>
+<button onclick="subAbsent('${day}${i}')">-</button>
+<span id="${day}${i}_absent">0</span>
+
+<br>
+
+<textarea id="${day}${i}_memo"></textarea>
+
+`
+}
+
+</script>
 
 </table>
 
