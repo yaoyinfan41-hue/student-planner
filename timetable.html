@@ -3,17 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <title>時間割</title>
+
+<style>
+body{
+font-family:sans-serif;
+}
+
+table{
+border-collapse: collapse;
+}
+
+td,th{
+border:1px solid black;
+padding:5px;
+vertical-align:top;
+}
+
+input{
+width:90%;
+}
+
+textarea{
+width:90%;
+height:40px;
+}
+
+.weekend{
+display:none;
+}
+
+.count{
+font-weight:bold;
+}
+</style>
+
 </head>
 <body>
 
 <h1>時間割</h1>
 
 <button onclick="saveTimetable()">保存</button>
-<button onclick="toggleWeekend()">土日表示</button>
+<button onclick="toggleWeekend()">土日表示/非表示</button>
 
 <br><br>
 
-<table border="1" id="timetable">
+<table id="timetable">
+
 <tr>
 <th>時限</th>
 <th>月</th>
@@ -21,1039 +56,217 @@
 <th>水</th>
 <th>木</th>
 <th>金</th>
-<th class="weekend" style="display:none">土</th>
-<th class="weekend" style="display:none">日</th>
+<th class="weekend">土</th>
+<th class="weekend">日</th>
 </tr>
 
+<!-- 1限 -->
 <tr>
 <th>
 1限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
+<input type="time" id="start1">~<input type="time" id="end1">
 </th>
 
-<td>
-
-<input id="mon1"><br>
-
-<input id="mon1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('mon1')">+</button>
-<button onclick="subAttend('mon1')">-</button>
-<span id="mon1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('mon1')">+</button>
-<button onclick="subAbsent('mon1')">-</button>
-<span id="mon1_absent">0</span>
-
-<br>
-
-<textarea id="mon1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="tue1"><br>
-
-<input id="tue1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('tue1')">+</button>
-<button onclick="subAttend('tue1')">-</button>
-<span id="tue1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('tue1')">+</button>
-<button onclick="subAbsent('tue1')">-</button>
-<span id="tue1_absent">0</span>
-
-<br>
-
-<textarea id="tue1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="wed1"><br>
-
-<input id="wed1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('wed1')">+</button>
-<button onclick="subAttend('wed1')">-</button>
-<span id="wed1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('wed1')">+</button>
-<button onclick="subAbsent('wed1')">-</button>
-<span id="wed1_absent">0</span>
-
-<br>
-
-<textarea id="wed1_memo" placeholder="メモ"></textarea>
-
-<td>
-
-<input id="thu1"><br>
-
-<input id="thu1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('thu1')">+</button>
-<button onclick="subAttend('thu1')">-</button>
-<span id="thu1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('thu1')">+</button>
-<button onclick="subAbsent('thu1')">-</button>
-<span id="thu1_absent">0</span>
-
-<br>
-
-<textarea id="thu1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="fri1"><br>
-
-<input id="fri1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('fri1')">+</button>
-<button onclick="subAttend('fri1')">-</button>
-<span id="fri1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('fri1')">+</button>
-<button onclick="subAbsent('fri1')">-</button>
-<span id="fri1_absent">0</span>
-
-<br>
-
-<textarea id="fri1_memo" placeholder="メモ"></textarea>
-
-</td>
-
-<td>
-
-<input id="sat1"><br>
-
-<input id="sat1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sat1')">+</button>
-<button onclick="subAttend('sat1')">-</button>
-<span id="sat1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sat1')">+</button>
-<button onclick="subAbsent('sat1')">-</button>
-<span id="sat1_absent">0</span>
-
-<br>
-
-<textarea id="sat1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="sun1"><br>
-
-<input id="sun1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sun1')">+</button>
-<button onclick="subAttend('sun1')">-</button>
-<span id="sun1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sun1')">+</button>
-<button onclick="subAbsent('sun1')">-</button>
-<span id="sun1_absent">0</span>
-
-<br>
-
-<textarea id="sun1_memo" placeholder="メモ"></textarea>
-
-</td>
+<td id="mon1"></td>
+<td id="tue1"></td>
+<td id="wed1"></td>
+<td id="thu1"></td>
+<td id="fri1"></td>
+<td id="sat1" class="weekend"></td>
+<td id="sun1" class="weekend"></td>
 </tr>
 
+<!-- 2限 -->
 <tr>
 <th>
 2限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
+<input type="time" id="start2">~<input type="time" id="end2">
 </th>
 
-<td>
-
-<input id="mon1"><br>
-
-<input id="mon1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('mon1')">+</button>
-<button onclick="subAttend('mon1')">-</button>
-<span id="mon1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('mon1')">+</button>
-<button onclick="subAbsent('mon1')">-</button>
-<span id="mon1_absent">0</span>
-
-<br>
-
-<textarea id="mon1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="tue1"><br>
-
-<input id="tue1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('tue1')">+</button>
-<button onclick="subAttend('tue1')">-</button>
-<span id="tue1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('tue1')">+</button>
-<button onclick="subAbsent('tue1')">-</button>
-<span id="tue1_absent">0</span>
-
-<br>
-
-<textarea id="tue1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="wed1"><br>
-
-<input id="wed1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('wed1')">+</button>
-<button onclick="subAttend('wed1')">-</button>
-<span id="wed1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('wed1')">+</button>
-<button onclick="subAbsent('wed1')">-</button>
-<span id="wed1_absent">0</span>
-
-<br>
-
-<textarea id="wed1_memo" placeholder="メモ"></textarea>
-
-<td>
-
-<input id="thu1"><br>
-
-<input id="thu1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('thu1')">+</button>
-<button onclick="subAttend('thu1')">-</button>
-<span id="thu1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('thu1')">+</button>
-<button onclick="subAbsent('thu1')">-</button>
-<span id="thu1_absent">0</span>
-
-<br>
-
-<textarea id="thu1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="fri1"><br>
-
-<input id="fri1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('fri1')">+</button>
-<button onclick="subAttend('fri1')">-</button>
-<span id="fri1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('fri1')">+</button>
-<button onclick="subAbsent('fri1')">-</button>
-<span id="fri1_absent">0</span>
-
-<br>
-
-<textarea id="fri1_memo" placeholder="メモ"></textarea>
-
-</td>
-
-<td>
-
-<input id="sat1"><br>
-
-<input id="sat1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sat1')">+</button>
-<button onclick="subAttend('sat1')">-</button>
-<span id="sat1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sat1')">+</button>
-<button onclick="subAbsent('sat1')">-</button>
-<span id="sat1_absent">0</span>
-
-<br>
-
-<textarea id="sat1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="sun1"><br>
-
-<input id="sun1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sun1')">+</button>
-<button onclick="subAttend('sun1')">-</button>
-<span id="sun1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sun1')">+</button>
-<button onclick="subAbsent('sun1')">-</button>
-<span id="sun1_absent">0</span>
-
-<br>
-
-<textarea id="sun1_memo" placeholder="メモ"></textarea>
-
-</td>
+<td id="mon2"></td>
+<td id="tue2"></td>
+<td id="wed2"></td>
+<td id="thu2"></td>
+<td id="fri2"></td>
+<td id="sat2" class="weekend"></td>
+<td id="sun2" class="weekend"></td>
 </tr>
 
+<!-- 3限 -->
 <tr>
 <th>
 3限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
+<input type="time" id="start3">~<input type="time" id="end3">
 </th>
 
-<td>
-
-<input id="mon1"><br>
-
-<input id="mon1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('mon1')">+</button>
-<button onclick="subAttend('mon1')">-</button>
-<span id="mon1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('mon1')">+</button>
-<button onclick="subAbsent('mon1')">-</button>
-<span id="mon1_absent">0</span>
-
-<br>
-
-<textarea id="mon1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="tue1"><br>
-
-<input id="tue1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('tue1')">+</button>
-<button onclick="subAttend('tue1')">-</button>
-<span id="tue1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('tue1')">+</button>
-<button onclick="subAbsent('tue1')">-</button>
-<span id="tue1_absent">0</span>
-
-<br>
-
-<textarea id="tue1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="wed1"><br>
-
-<input id="wed1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('wed1')">+</button>
-<button onclick="subAttend('wed1')">-</button>
-<span id="wed1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('wed1')">+</button>
-<button onclick="subAbsent('wed1')">-</button>
-<span id="wed1_absent">0</span>
-
-<br>
-
-<textarea id="wed1_memo" placeholder="メモ"></textarea>
-
-<td>
-
-<input id="thu1"><br>
-
-<input id="thu1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('thu1')">+</button>
-<button onclick="subAttend('thu1')">-</button>
-<span id="thu1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('thu1')">+</button>
-<button onclick="subAbsent('thu1')">-</button>
-<span id="thu1_absent">0</span>
-
-<br>
-
-<textarea id="thu1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="fri1"><br>
-
-<input id="fri1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('fri1')">+</button>
-<button onclick="subAttend('fri1')">-</button>
-<span id="fri1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('fri1')">+</button>
-<button onclick="subAbsent('fri1')">-</button>
-<span id="fri1_absent">0</span>
-
-<br>
-
-<textarea id="fri1_memo" placeholder="メモ"></textarea>
-
-</td>
-
-<td>
-
-<input id="sat1"><br>
-
-<input id="sat1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sat1')">+</button>
-<button onclick="subAttend('sat1')">-</button>
-<span id="sat1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sat1')">+</button>
-<button onclick="subAbsent('sat1')">-</button>
-<span id="sat1_absent">0</span>
-
-<br>
-
-<textarea id="sat1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="sun1"><br>
-
-<input id="sun1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sun1')">+</button>
-<button onclick="subAttend('sun1')">-</button>
-<span id="sun1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sun1')">+</button>
-<button onclick="subAbsent('sun1')">-</button>
-<span id="sun1_absent">0</span>
-
-<br>
-
-<textarea id="sun1_memo" placeholder="メモ"></textarea>
-
-</td>
+<td id="mon3"></td>
+<td id="tue3"></td>
+<td id="wed3"></td>
+<td id="thu3"></td>
+<td id="fri3"></td>
+<td id="sat3" class="weekend"></td>
+<td id="sun3" class="weekend"></td>
 </tr>
-  
+
+<!-- 4限 -->
 <tr>
 <th>
 4限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
+<input type="time" id="start4">~<input type="time" id="end4">
 </th>
 
-<td>
-
-<input id="mon1"><br>
-
-<input id="mon1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('mon1')">+</button>
-<button onclick="subAttend('mon1')">-</button>
-<span id="mon1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('mon1')">+</button>
-<button onclick="subAbsent('mon1')">-</button>
-<span id="mon1_absent">0</span>
-
-<br>
-
-<textarea id="mon1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="tue1"><br>
-
-<input id="tue1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('tue1')">+</button>
-<button onclick="subAttend('tue1')">-</button>
-<span id="tue1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('tue1')">+</button>
-<button onclick="subAbsent('tue1')">-</button>
-<span id="tue1_absent">0</span>
-
-<br>
-
-<textarea id="tue1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="wed1"><br>
-
-<input id="wed1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('wed1')">+</button>
-<button onclick="subAttend('wed1')">-</button>
-<span id="wed1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('wed1')">+</button>
-<button onclick="subAbsent('wed1')">-</button>
-<span id="wed1_absent">0</span>
-
-<br>
-
-<textarea id="wed1_memo" placeholder="メモ"></textarea>
-
-<td>
-
-<input id="thu1"><br>
-
-<input id="thu1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('thu1')">+</button>
-<button onclick="subAttend('thu1')">-</button>
-<span id="thu1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('thu1')">+</button>
-<button onclick="subAbsent('thu1')">-</button>
-<span id="thu1_absent">0</span>
-
-<br>
-
-<textarea id="thu1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="fri1"><br>
-
-<input id="fri1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('fri1')">+</button>
-<button onclick="subAttend('fri1')">-</button>
-<span id="fri1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('fri1')">+</button>
-<button onclick="subAbsent('fri1')">-</button>
-<span id="fri1_absent">0</span>
-
-<br>
-
-<textarea id="fri1_memo" placeholder="メモ"></textarea>
-
-</td>
-
-<td>
-
-<input id="sat1"><br>
-
-<input id="sat1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sat1')">+</button>
-<button onclick="subAttend('sat1')">-</button>
-<span id="sat1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sat1')">+</button>
-<button onclick="subAbsent('sat1')">-</button>
-<span id="sat1_absent">0</span>
-
-<br>
-
-<textarea id="sat1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="sun1"><br>
-
-<input id="sun1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sun1')">+</button>
-<button onclick="subAttend('sun1')">-</button>
-<span id="sun1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sun1')">+</button>
-<button onclick="subAbsent('sun1')">-</button>
-<span id="sun1_absent">0</span>
-
-<br>
-
-<textarea id="sun1_memo" placeholder="メモ"></textarea>
-
-</td>
+<td id="mon4"></td>
+<td id="tue4"></td>
+<td id="wed4"></td>
+<td id="thu4"></td>
+<td id="fri4"></td>
+<td id="sat4" class="weekend"></td>
+<td id="sun4" class="weekend"></td>
 </tr>
 
+<!-- 5限 -->
 <tr>
 <th>
 5限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
+<input type="time" id="start5">~<input type="time" id="end5">
 </th>
 
-<td>
-
-<input id="mon1"><br>
-
-<input id="mon1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('mon1')">+</button>
-<button onclick="subAttend('mon1')">-</button>
-<span id="mon1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('mon1')">+</button>
-<button onclick="subAbsent('mon1')">-</button>
-<span id="mon1_absent">0</span>
-
-<br>
-
-<textarea id="mon1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="tue1"><br>
-
-<input id="tue1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('tue1')">+</button>
-<button onclick="subAttend('tue1')">-</button>
-<span id="tue1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('tue1')">+</button>
-<button onclick="subAbsent('tue1')">-</button>
-<span id="tue1_absent">0</span>
-
-<br>
-
-<textarea id="tue1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="wed1"><br>
-
-<input id="wed1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('wed1')">+</button>
-<button onclick="subAttend('wed1')">-</button>
-<span id="wed1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('wed1')">+</button>
-<button onclick="subAbsent('wed1')">-</button>
-<span id="wed1_absent">0</span>
-
-<br>
-
-<textarea id="wed1_memo" placeholder="メモ"></textarea>
-
-<td>
-
-<input id="thu1"><br>
-
-<input id="thu1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('thu1')">+</button>
-<button onclick="subAttend('thu1')">-</button>
-<span id="thu1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('thu1')">+</button>
-<button onclick="subAbsent('thu1')">-</button>
-<span id="thu1_absent">0</span>
-
-<br>
-
-<textarea id="thu1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="fri1"><br>
-
-<input id="fri1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('fri1')">+</button>
-<button onclick="subAttend('fri1')">-</button>
-<span id="fri1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('fri1')">+</button>
-<button onclick="subAbsent('fri1')">-</button>
-<span id="fri1_absent">0</span>
-
-<br>
-
-<textarea id="fri1_memo" placeholder="メモ"></textarea>
-
-</td>
-
-<td>
-
-<input id="sat1"><br>
-
-<input id="sat1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sat1')">+</button>
-<button onclick="subAttend('sat1')">-</button>
-<span id="sat1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sat1')">+</button>
-<button onclick="subAbsent('sat1')">-</button>
-<span id="sat1_absent">0</span>
-
-<br>
-
-<textarea id="sat1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="sun1"><br>
-
-<input id="sun1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sun1')">+</button>
-<button onclick="subAttend('sun1')">-</button>
-<span id="sun1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sun1')">+</button>
-<button onclick="subAbsent('sun1')">-</button>
-<span id="sun1_absent">0</span>
-
-<br>
-
-<textarea id="sun1_memo" placeholder="メモ"></textarea>
-
-</td>
+<td id="mon5"></td>
+<td id="tue5"></td>
+<td id="wed5"></td>
+<td id="thu5"></td>
+<td id="fri5"></td>
+<td id="sat5" class="weekend"></td>
+<td id="sun5" class="weekend"></td>
 </tr>
 
+<!-- 6限 -->
 <tr>
 <th>
 6限<br>
-<input type="time" id="start1">
-~
-<input type="time" id="end1">
+<input type="time" id="start6">~<input type="time" id="end6">
 </th>
 
-<td>
-
-<input id="mon1"><br>
-
-<input id="mon1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('mon1')">+</button>
-<button onclick="subAttend('mon1')">-</button>
-<span id="mon1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('mon1')">+</button>
-<button onclick="subAbsent('mon1')">-</button>
-<span id="mon1_absent">0</span>
-
-<br>
-
-<textarea id="mon1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="tue1"><br>
-
-<input id="tue1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('tue1')">+</button>
-<button onclick="subAttend('tue1')">-</button>
-<span id="tue1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('tue1')">+</button>
-<button onclick="subAbsent('tue1')">-</button>
-<span id="tue1_absent">0</span>
-
-<br>
-
-<textarea id="tue1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="wed1"><br>
-
-<input id="wed1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('wed1')">+</button>
-<button onclick="subAttend('wed1')">-</button>
-<span id="wed1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('wed1')">+</button>
-<button onclick="subAbsent('wed1')">-</button>
-<span id="wed1_absent">0</span>
-
-<br>
-
-<textarea id="wed1_memo" placeholder="メモ"></textarea>
-
-<td>
-
-<input id="thu1"><br>
-
-<input id="thu1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('thu1')">+</button>
-<button onclick="subAttend('thu1')">-</button>
-<span id="thu1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('thu1')">+</button>
-<button onclick="subAbsent('thu1')">-</button>
-<span id="thu1_absent">0</span>
-
-<br>
-
-<textarea id="thu1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="fri1"><br>
-
-<input id="fri1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('fri1')">+</button>
-<button onclick="subAttend('fri1')">-</button>
-<span id="fri1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('fri1')">+</button>
-<button onclick="subAbsent('fri1')">-</button>
-<span id="fri1_absent">0</span>
-
-<br>
-
-<textarea id="fri1_memo" placeholder="メモ"></textarea>
-
-</td>
-
-<td>
-
-<input id="sat1"><br>
-
-<input id="sat1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sat1')">+</button>
-<button onclick="subAttend('sat1')">-</button>
-<span id="sat1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sat1')">+</button>
-<button onclick="subAbsent('sat1')">-</button>
-<span id="sat1_absent">0</span>
-
-<br>
-
-<textarea id="sat1_memo" placeholder="メモ"></textarea>
-
-</td>
-<td>
-
-<input id="sun1"><br>
-
-<input id="sun1_room" placeholder="教室"><br>
-
-出席
-<button onclick="addAttend('sun1')">+</button>
-<button onclick="subAttend('sun1')">-</button>
-<span id="sun1_attend">0</span>
-
-<br>
-
-欠席
-<button onclick="addAbsent('sun1')">+</button>
-<button onclick="subAbsent('sun1')">-</button>
-<span id="sun1_absent">0</span>
-
-<br>
-
-<textarea id="sun1_memo" placeholder="メモ"></textarea>
-
-</td>
+<td id="mon6"></td>
+<td id="tue6"></td>
+<td id="wed6"></td>
+<td id="thu6"></td>
+<td id="fri6"></td>
+<td id="sat6" class="weekend"></td>
+<td id="sun6" class="weekend"></td>
 </tr>
 
 </table>
 
-<script src="script.js"></script>
+<script>
+
+const days=["mon","tue","wed","thu","fri","sat","sun"];
+
+for(let i=1;i<=6;i++){
+days.forEach(day=>{
+createCell(day+i);
+});
+}
+
+function createCell(id){
+
+document.getElementById(id).innerHTML=`
+
+<input id="${id}_name" placeholder="授業"><br>
+
+<input id="${id}_room" placeholder="教室"><br>
+
+出席
+<button onclick="addAttend('${id}')">+</button>
+<button onclick="subAttend('${id}')">-</button>
+<span class="count" id="${id}_attend">0</span>
+
+<br>
+
+欠席
+<button onclick="addAbsent('${id}')">+</button>
+<button onclick="subAbsent('${id}')">-</button>
+<span class="count" id="${id}_absent">0</span>
+
+<br>
+
+<textarea id="${id}_memo" placeholder="メモ"></textarea>
+
+`;
+}
+
+function addAttend(id){
+let el=document.getElementById(id+"_attend");
+el.textContent=parseInt(el.textContent)+1;
+}
+
+function subAttend(id){
+let el=document.getElementById(id+"_attend");
+el.textContent=Math.max(0,parseInt(el.textContent)-1);
+}
+
+function addAbsent(id){
+let el=document.getElementById(id+"_absent");
+el.textContent=parseInt(el.textContent)+1;
+}
+
+function subAbsent(id){
+let el=document.getElementById(id+"_absent");
+el.textContent=Math.max(0,parseInt(el.textContent)-1);
+}
+
+let weekend=false;
+
+function toggleWeekend(){
+weekend=!weekend;
+
+document.querySelectorAll(".weekend").forEach(el=>{
+el.style.display=weekend?"":"none";
+});
+}
+
+function saveTimetable(){
+
+let data={};
+
+document.querySelectorAll("input,textarea").forEach(el=>{
+data[el.id]=el.value;
+});
+
+document.querySelectorAll(".count").forEach(el=>{
+data[el.id]=el.textContent;
+});
+
+localStorage.setItem("timetable",JSON.stringify(data));
+
+alert("保存しました");
+}
+
+window.onload=function(){
+
+let data=localStorage.getItem("timetable");
+
+if(!data)return;
+
+data=JSON.parse(data);
+
+for(let id in data){
+
+let el=document.getElementById(id);
+
+if(!el)continue;
+
+if(el.classList.contains("count")){
+el.textContent=data[id];
+}else{
+el.value=data[id];
+}
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
