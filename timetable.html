@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>時間割</title>
 </head>
+
 <body>
 
 <h1>時間割</h1>
 
-<button onclick="toggleSaturday()">土曜表示/非表示</button>
-<button onclick="toggleSunday()">日曜表示/非表示</button>
+<button onclick="saveTimetable()">保存</button>
+<button onclick="showToday()">今日の授業</button>
+<button onclick="showAll()">全部表示</button>
+<button onclick="toggleWeekend()">土日表示</button>
+
+<div id="nextClass"></div>
+
+<br><br>
 
 <table border="1" id="timetable">
 
@@ -19,32 +27,37 @@
 <th>水</th>
 <th>木</th>
 <th>金</th>
-<th class="sat" style="display:none">土</th>
-<th class="sun" style="display:none">日</th>
+<th class="weekend" style="display:none">土</th>
+<th class="weekend" style="display:none">日</th>
 </tr>
 
 <script>
+const days=["mon","tue","wed","thu","fri","sat","sun"];
+
 for(let i=1;i<=6;i++){
+
 document.write(`
 <tr>
+
 <th>
 ${i}限<br>
-
-開始
 <input type="time" id="start${i}">
 <br>
-終了
 <input type="time" id="end${i}">
 </th>
 
-<td>${cell("mon",i)}</td>
-<td>${cell("tue",i)}</td>
-<td>${cell("wed",i)}</td>
-<td>${cell("thu",i)}</td>
-<td>${cell("fri",i)}</td>
+${days.map(day=>{
 
-<td class="sat" style="display:none">${cell("sat",i)}</td>
-<td class="sun" style="display:none">${cell("sun",i)}</td>
+const weekend=(day==="sat"||day==="sun")?
+'class="weekend" style="display:none"' : "";
+
+return `
+<td ${weekend}>
+${cell(day,i)}
+</td>
+`
+
+}).join("")}
 
 </tr>
 `)
@@ -52,18 +65,38 @@ ${i}限<br>
 
 function cell(day,i){
 return `
-授業<input id="${day}${i}"><br>
 
-教室<input id="${day}${i}_room"><br>
+<select id="${day}${i}_color">
+<option value="">通常</option>
+<option value="#ffd6d6">必修</option>
+<option value="#d6e4ff">選択</option>
+<option value="#d6ffd6">実験</option>
+</select>
 
-出席:
+<br>
+
+授業<br>
+<input id="${day}${i}">
+
+<br>
+
+教室<br>
+<input id="${day}${i}_room">
+
+<br>
+
+休講 <input type="checkbox" id="${day}${i}_cancel">
+
+<br>
+
+出席
 <button onclick="addAttend('${day}${i}')">+</button>
 <button onclick="subAttend('${day}${i}')">-</button>
 <span id="${day}${i}_attend">0</span>
 
 <br>
 
-欠席:
+欠席
 <button onclick="addAbsent('${day}${i}')">+</button>
 <button onclick="subAbsent('${day}${i}')">-</button>
 <span id="${day}${i}_absent">0</span>
@@ -71,14 +104,12 @@ return `
 <br>
 
 <textarea id="${day}${i}_memo" placeholder="メモ"></textarea>
+
 `
 }
 </script>
 
 </table>
-
-<br>
-<button onclick="saveTimetable()">保存</button>
 
 <script src="script.js"></script>
 
