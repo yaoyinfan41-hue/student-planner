@@ -57,6 +57,7 @@ function createTable() {
 
     for (let j = 0; j < days.length; j++) {
       let cell = document.createElement("td");
+
       cell.dataset.day = j;
       cell.dataset.period = i;
 
@@ -64,8 +65,8 @@ function createTable() {
 
       if (data) {
         cell.innerHTML = `
-        <div>${data.subject || ""}</div>
-        <small>${data.room || ""}</small>
+          <div>${data.subject || ""}</div>
+          <small>${data.room || ""}</small>
         `;
       }
 
@@ -86,8 +87,8 @@ function updateTimeCell(cell, index) {
   }
 
   cell.innerHTML = `
-  <div>${index + 1}限</div>
-  <small>${text}</small>
+    <div>${index + 1}限</div>
+    <small>${text}</small>
   `;
 }
 
@@ -116,6 +117,7 @@ function editTime(e) {
   modalTitle.textContent = `${currentPeriod + 1}限の時間設定`;
 
   let data = timeData[currentPeriod];
+
   startInput.value = data?.start || "";
   endInput.value = data?.end || "";
 }
@@ -151,7 +153,7 @@ saveClassBtn.addEventListener("click", () => {
   classModal.style.display = "none";
 });
 
-// オンデマンド追加
+// オンデマンド
 addOnlineBtn.addEventListener("click", () => {
   if (!onlineSubject.value) return;
 
@@ -195,6 +197,7 @@ function updateTableDisplay() {
   document.querySelectorAll("td").forEach(cell => {
     let day = Number(cell.dataset.day);
     let period = Number(cell.dataset.period);
+
     let data = timetableData?.[period]?.[day];
 
     cell.className = "";
@@ -209,10 +212,10 @@ function updateTableDisplay() {
     }
 
     cell.innerHTML = `
-    <div>${data.subject || ""}</div>
-    <small>${data.room || ""}</small>
-    <small>${data.memo || ""}</small>
-    <small>出:${data.attend || 0} 欠:${data.absent || 0}</small>
+      <div>${data.subject || ""}</div>
+      <small>${data.room || ""}</small>
+      <small>${data.memo || ""}</small>
+      <small>出:${data.attend || 0} 欠:${data.absent || 0}</small>
     `;
   });
 }
@@ -243,11 +246,11 @@ function updateTodayView() {
     }
 
     html += `
-    <div class="today-card">
-    <strong>${i + 1}限 (${timeText})</strong><br>
-    ${subject}<br>
-    <small>${room}</small>
-    </div>
+      <div class="today-card">
+        <strong>${i + 1}限 (${timeText})</strong><br>
+        ${subject}<br>
+        <small>${room}</small>
+      </div>
     `;
   }
 
