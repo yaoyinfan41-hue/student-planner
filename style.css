@@ -90,3 +90,15 @@ color: white;
 border: none;
 border-radius: 5px;
 }
+
+.required {
+background: #ffe5e5;
+}
+
+.elective {
+background: #e5f0ff;
+}
+
+.lab {
+background: #e5ffe5;
+}
