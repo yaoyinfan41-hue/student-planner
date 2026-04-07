@@ -80,8 +80,8 @@ let text = prompt("授業名を入力");
 
 if (text !== null) {
 
-let day = parseInt(e.target.dataset.day);
-let period = parseInt(e.target.dataset.period);
+let day = Number(e.target.dataset.day);
+let period = Number(e.target.dataset.period);
 
 timetableData[period][day] = text;
 
@@ -93,7 +93,7 @@ saveData();
 
 function editTime(e) {
 
-currentPeriod = parseInt(e.currentTarget.dataset.period);
+currentPeriod = Number(e.currentTarget.dataset.period);
 
 modal.style.display = "flex";
 modalTitle.textContent = `${currentPeriod + 1}限の時間設定`;
@@ -112,7 +112,7 @@ end: endInput.value
 };
 
 document.querySelectorAll(".period-cell").forEach(cell => {
-if (parseInt(cell.dataset.period) === currentPeriod) {
+if (Number(cell.dataset.period) === currentPeriod) {
 updateTimeCell(cell, currentPeriod);
 }
 });
@@ -135,22 +135,28 @@ localStorage.setItem("timeData", JSON.stringify(timeData));
 
 function loadData() {
 
-let savedTable = localStorage.getItem("timetable");
-let savedTime = localStorage.getItem("timeData");
+let savedTable = JSON.parse(localStorage.getItem("timetable"));
+let savedTime = JSON.parse(localStorage.getItem("timeData"));
 
-// 時間割データ
-if (savedTable) {
-timetableData = JSON.parse(savedTable);
-} else {
+// 常に新規作成
 timetableData = Array.from({ length: periods }, () =>
 Array(days.length).fill("")
 );
+
+timeData = Array(periods).fill(null);
+
+// 上書き復元
+if (savedTable) {
+for (let i = 0; i < periods; i++) {
+for (let j = 0; j < days.length; j++) {
+timetableData[i][j] = savedTable?.[i]?.[j] || "";
+}
+}
 }
 
-// 時間データ
 if (savedTime) {
-timeData = JSON.parse(savedTime);
-} else {
-timeData = Array(periods).fill(null);
+for (let i = 0; i < periods; i++) {
+timeData[i] = savedTime[i] || null;
+}
 }
 }
