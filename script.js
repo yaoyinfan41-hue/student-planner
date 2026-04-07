@@ -180,7 +180,10 @@ timeData[i] = savedTime[i] || null;
 
 saveClassBtn.addEventListener("click", () => {
 
+let old = timetableData[currentClassPeriod][currentDay] || {};
+
 timetableData[currentClassPeriod][currentDay] = {
+...old,
 subject: subjectInput.value,
 room: roomInput.value,
 memo: memoInput.value,
@@ -201,6 +204,12 @@ classModal.style.display = "none";
 
 });
 
+updateTableDisplay();
+saveData();
+classModal.style.display = "none";
+
+});
+
 function updateTableDisplay() {
 
 document.querySelectorAll("td").forEach(cell => {
@@ -208,11 +217,11 @@ document.querySelectorAll("td").forEach(cell => {
 let day = Number(cell.dataset.day);
 let period = Number(cell.dataset.period);
 
-let data = timetableData[period][day];
+let data = timetableData?.[period]?.[day];
 
 cell.className = "";
 
-if (!data) {
+if (!data || Object.keys(data).length === 0) {
 cell.textContent = "";
 return;
 }
