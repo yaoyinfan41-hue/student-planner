@@ -53,11 +53,17 @@ function createTable() {
 // 時間セル更新
 function updateTimeCell(cell, index) {
 
-    let time = timeData[index] || "";
+    let time = timeData[index];
+
+    let text = "";
+
+    if (time) {
+        text = `${time.start}-${time.end}`;
+    }
 
     cell.innerHTML = `
         <div>${index + 1}限</div>
-        <small>${time}</small>
+        <small>${text}</small>
     `;
 }
 
