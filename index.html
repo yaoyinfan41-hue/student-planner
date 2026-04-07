@@ -1,19 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<title>Student Planner</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>時間割アプリ</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>Student Planner</h1>
+<h1>時間割</h1>
 
-<h2>メニュー</h2>
+<div class="table-container">
+<table id="timetable">
+<thead>
+<tr>
+<th></th>
+<th>月</th>
+<th>火</th>
+<th>水</th>
+<th>木</th>
+<th>金</th>
+</tr>
+</thead>
 
-<ul>
-<li><a href="diary.html">日記</a></li>
-<li><a href="todo.html">ToDo</a></li>
-<li><a href="timetable.html">時間割</a></li>
-</ul>
+<tbody id="table-body">
+</tbody>
+</table>
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
