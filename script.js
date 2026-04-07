@@ -17,6 +17,7 @@ const subjectInput = document.getElementById("subject-input");
 const roomInput = document.getElementById("room-input");
 const memoInput = document.getElementById("memo-input");
 const saveClassBtn = document.getElementById("save-class");
+const typeInput = document.getElementById("type-input");
 
 let currentDay = null;
 let currentClassPeriod = null;
@@ -99,6 +100,7 @@ let data = timetableData[currentClassPeriod][currentDay] || {};
 subjectInput.value = data.subject || "";
 roomInput.value = data.room || "";
 memoInput.value = data.memo || "";
+typeInput.value = data.type || "";
 
 classModal.style.display = "flex";
 }
@@ -178,14 +180,14 @@ saveClassBtn.addEventListener("click", () => {
 timetableData[currentClassPeriod][currentDay] = {
 subject: subjectInput.value,
 room: roomInput.value,
-memo: memoInput.value
+memo: memoInput.value,
+type: typeInput.value
 };
 
 updateTableDisplay();
-
 saveData();
-
 classModal.style.display = "none";
+
 });
 
 function updateTableDisplay() {
@@ -197,15 +199,22 @@ let period = Number(cell.dataset.period);
 
 let data = timetableData[period][day];
 
+cell.className = "";
+
 if (!data) {
 cell.textContent = "";
 return;
+}
+
+if (data.type) {
+cell.classList.add(data.type);
 }
 
 cell.innerHTML = `
 <div>${data.subject || ""}</div>
 <small>${data.room || ""}</small>
 `;
+
 });
 }
 
