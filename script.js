@@ -84,15 +84,37 @@ function editTime(e) {
 
     let period = e.currentTarget.dataset.period;
 
-    let time = prompt("時間入力\n例: 09:00-10:30");
+    let start = timeData[period]?.start || "";
+    let end = timeData[period]?.end || "";
 
-    if (time !== null) {
+    let html = `
+開始: <input type="time" id="start" value="${start}"><br>
+終了: <input type="time" id="end" value="${end}">
+`;
 
-        timeData[period] = time;
+    let wrapper = document.createElement("div");
+    wrapper.innerHTML = html;
 
-        updateTimeCell(e.currentTarget, period);
+    if (confirm("OKを押してから時間入力してください")) {
 
-        saveData();
+        setTimeout(() => {
+
+            let startTime = prompt("開始時間 (例 09:00)", start);
+            let endTime = prompt("終了時間 (例 10:30)", end);
+
+            if (startTime && endTime) {
+
+                timeData[period] = {
+                    start: startTime,
+                    end: endTime
+                };
+
+                updateTimeCell(e.currentTarget, period);
+                saveData();
+            }
+
+        }, 100);
+
     }
 }
 
