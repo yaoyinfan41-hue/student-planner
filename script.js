@@ -102,6 +102,9 @@ roomInput.value = data.room || "";
 memoInput.value = data.memo || "";
 typeInput.value = data.type || "";
 
+attendInput.value = data.attend || 0;
+absentInput.value = data.absent || 0;
+
 classModal.style.display = "flex";
 }
 
@@ -181,8 +184,16 @@ timetableData[currentClassPeriod][currentDay] = {
 subject: subjectInput.value,
 room: roomInput.value,
 memo: memoInput.value,
-type: typeInput.value
+type: typeInput.value,
+attend: Number(attendInput.value),
+absent: Number(absentInput.value)
 };
+
+updateTableDisplay();
+saveData();
+classModal.style.display = "none";
+
+});
 
 updateTableDisplay();
 saveData();
@@ -213,6 +224,7 @@ cell.classList.add(data.type);
 cell.innerHTML = `
 <div>${data.subject || ""}</div>
 <small>${data.room || ""}</small>
+<small>出:${data.attend || 0} 欠:${data.absent || 0}</small>
 `;
 
 });
