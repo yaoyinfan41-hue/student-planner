@@ -6,139 +6,141 @@ const tableBody = document.getElementById("table-body");
 let timetableData = [];
 let timeData = [];
 
+// モーダル
+const modal = document.getElementById("modal");
+const startInput = document.getElementById("start-time");
+const endInput = document.getElementById("end-time");
+const saveBtn = document.getElementById("save-time");
+const modalTitle = document.getElementById("modal-title");
+
+let currentPeriod = null;
+
 init();
 
 function init() {
-    loadData();
-    createTable();
+loadData();
+createTable();
 }
 
-// 表作成
 function createTable() {
 
-    for (let i = 0; i < periods; i++) {
+for (let i = 0; i < periods; i++) {
 
-        let row = document.createElement("tr");
+let row = document.createElement("tr");
 
-        // 時限セル
-        let periodCell = document.createElement("th");
-        periodCell.className = "period-cell";
-        periodCell.dataset.period = i;
+// 時限セル
+let periodCell = document.createElement("th");
+periodCell.className = "period-cell";
+periodCell.dataset.period = i;
 
-        updateTimeCell(periodCell, i);
+updateTimeCell(periodCell, i);
 
-        periodCell.addEventListener("click", editTime);
+periodCell.addEventListener("click", editTime);
 
-        row.appendChild(periodCell);
+row.appendChild(periodCell);
 
-        // 授業セル
-        for (let j = 0; j < days.length; j++) {
+// 授業セル
+for (let j = 0; j < days.length; j++) {
 
-            let cell = document.createElement("td");
+let cell = document.createElement("td");
 
-            cell.dataset.day = j;
-            cell.dataset.period = i;
+cell.dataset.day = j;
+cell.dataset.period = i;
 
-            cell.textContent = timetableData[i][j] || "";
+cell.textContent = timetableData[i][j] || "";
 
-            cell.addEventListener("click", editCell);
+cell.addEventListener("click", editCell);
 
-            row.appendChild(cell);
-        }
-
-        tableBody.appendChild(row);
-    }
+row.appendChild(cell);
 }
 
-// 時間セル更新
+tableBody.appendChild(row);
+}
+}
+
 function updateTimeCell(cell, index) {
 
-    let time = timeData[index];
+let time = timeData[index];
+let text = "";
 
-    let text = "";
-
-    if (time) {
-        text = `${time.start}-${time.end}`;
-    }
-
-    cell.innerHTML = `
-        <div>${index + 1}限</div>
-        <small>${text}</small>
-    `;
+if (time) {
+text = `${time.start}-${time.end}`;
 }
 
-// 授業編集
+cell.innerHTML = `
+<div>${index + 1}限</div>
+<small>${text}</small>
+`;
+}
+
 function editCell(e) {
 
-    let text = prompt("授業名を入力");
+let text = prompt("授業名を入力");
 
-    if (text !== null) {
+if (text !== null) {
 
-        e.target.textContent = text;
+e.target.textContent = text;
 
-        let day = e.target.dataset.day;
-        let period = e.target.dataset.period;
+let day = e.target.dataset.day;
+let period = e.target.dataset.period;
 
-        timetableData[period][day] = text;
+timetableData[period][day] = text;
 
-        saveData();
-    }
+saveData();
+}
 }
 
-// 時間編集
 function editTime(e) {
 
-    let period = e.currentTarget.dataset.period;
+currentPeriod = e.currentTarget.dataset.period;
 
-    let start = timeData[period]?.start || "";
-    let end = timeData[period]?.end || "";
+modal.style.display = "flex";
 
-    let html = `
-開始: <input type="time" id="start" value="${start}"><br>
-終了: <input type="time" id="end" value="${end}">
-`;
+modalTitle.textContent = `${parseInt(currentPeriod)+1}限の時間設定`;
 
-    let wrapper = document.createElement("div");
-    wrapper.innerHTML = html;
+let data = timeData[currentPeriod];
 
-    if (confirm("OKを押してから時間入力してください")) {
-
-        setTimeout(() => {
-
-            let startTime = prompt("開始時間 (例 09:00)", start);
-            let endTime = prompt("終了時間 (例 10:30)", end);
-
-            if (startTime && endTime) {
-
-                timeData[period] = {
-                    start: startTime,
-                    end: endTime
-                };
-
-                updateTimeCell(e.currentTarget, period);
-                saveData();
-            }
-
-        }, 100);
-
-    }
+startInput.value = data?.start || "";
+endInput.value = data?.end || "";
 }
 
-// 保存
+saveBtn.addEventListener("click", () => {
+
+timeData[currentPeriod] = {
+start: startInput.value,
+end: endInput.value
+};
+
+document.querySelectorAll(".period-cell").forEach(cell => {
+if (cell.dataset.period == currentPeriod) {
+updateTimeCell(cell, currentPeriod);
+}
+});
+
+saveData();
+
+modal.style.display = "none";
+});
+
+modal.addEventListener("click", (e) => {
+if (e.target === modal) {
+modal.style.display = "none";
+}
+});
+
 function saveData() {
 
-    localStorage.setItem("timetable", JSON.stringify(timetableData));
-    localStorage.setItem("timeData", JSON.stringify(timeData));
+localStorage.setItem("timetable", JSON.stringify(timetableData));
+localStorage.setItem("timeData", JSON.stringify(timeData));
 }
 
-// 読み込み
 function loadData() {
 
-    timetableData =
-        JSON.parse(localStorage.getItem("timetable")) ||
-        Array.from({ length: periods }, () => Array(days.length).fill(""));
+timetableData =
+JSON.parse(localStorage.getItem("timetable")) ||
+Array.from({ length: periods }, () => Array(days.length).fill(""));
 
-    timeData =
-        JSON.parse(localStorage.getItem("timeData")) ||
-        Array(periods).fill("");
+timeData =
+JSON.parse(localStorage.getItem("timeData")) ||
+Array(periods).fill("");
 }
