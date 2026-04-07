@@ -102,3 +102,15 @@ background: #e5f0ff;
 .lab {
 background: #e5ffe5;
 }
+
+#today-view {
+margin-top: 10px;
+}
+
+.today-card {
+background: white;
+padding: 10px;
+margin-bottom: 8px;
+border-radius: 8px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
