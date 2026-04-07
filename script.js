@@ -3,64 +3,114 @@ const periods = 6;
 
 const tableBody = document.getElementById("table-body");
 
+let timetableData = [];
+let timeData = [];
+
+init();
+
+function init() {
+    loadData();
+    createTable();
+}
+
 // 表作成
-for (let i = 1; i <= periods; i++) {
+function createTable() {
 
-let row = document.createElement("tr");
+    for (let i = 0; i < periods; i++) {
 
-// 時限列
-let periodCell = document.createElement("th");
-periodCell.textContent = i + "限";
-row.appendChild(periodCell);
+        let row = document.createElement("tr");
 
-// 曜日列
-for (let j = 0; j < days.length; j++) {
+        // 時限セル
+        let periodCell = document.createElement("th");
+        periodCell.className = "period-cell";
+        periodCell.dataset.period = i;
 
-let cell = document.createElement("td");
+        updateTimeCell(periodCell, i);
 
-cell.dataset.day = j;
-cell.dataset.period = i;
+        periodCell.addEventListener("click", editTime);
 
-cell.addEventListener("click", editCell);
+        row.appendChild(periodCell);
 
-row.appendChild(cell);
+        // 授業セル
+        for (let j = 0; j < days.length; j++) {
+
+            let cell = document.createElement("td");
+
+            cell.dataset.day = j;
+            cell.dataset.period = i;
+
+            cell.textContent = timetableData[i][j] || "";
+
+            cell.addEventListener("click", editCell);
+
+            row.appendChild(cell);
+        }
+
+        tableBody.appendChild(row);
+    }
 }
 
-tableBody.appendChild(row);
+// 時間セル更新
+function updateTimeCell(cell, index) {
+
+    let time = timeData[index] || "";
+
+    cell.innerHTML = `
+        <div>${index + 1}限</div>
+        <small>${time}</small>
+    `;
 }
 
-loadData();
-
+// 授業編集
 function editCell(e) {
 
-let text = prompt("授業名を入力");
+    let text = prompt("授業名を入力");
 
-if (text !== null) {
-e.target.textContent = text;
-saveData();
+    if (text !== null) {
+
+        e.target.textContent = text;
+
+        let day = e.target.dataset.day;
+        let period = e.target.dataset.period;
+
+        timetableData[period][day] = text;
+
+        saveData();
+    }
 }
 
+// 時間編集
+function editTime(e) {
+
+    let period = e.currentTarget.dataset.period;
+
+    let time = prompt("時間入力\n例: 09:00-10:30");
+
+    if (time !== null) {
+
+        timeData[period] = time;
+
+        updateTimeCell(e.currentTarget, period);
+
+        saveData();
+    }
 }
 
+// 保存
 function saveData() {
 
-let data = [];
-
-document.querySelectorAll("td").forEach(cell => {
-data.push(cell.textContent);
-});
-
-localStorage.setItem("timetable", JSON.stringify(data));
+    localStorage.setItem("timetable", JSON.stringify(timetableData));
+    localStorage.setItem("timeData", JSON.stringify(timeData));
 }
 
+// 読み込み
 function loadData() {
 
-let data = JSON.parse(localStorage.getItem("timetable"));
+    timetableData =
+        JSON.parse(localStorage.getItem("timetable")) ||
+        Array.from({ length: periods }, () => Array(days.length).fill(""));
 
-if (!data) return;
-
-document.querySelectorAll("td").forEach((cell, index) => {
-cell.textContent = data[index];
-});
-
+    timeData =
+        JSON.parse(localStorage.getItem("timeData")) ||
+        Array(periods).fill("");
 }
