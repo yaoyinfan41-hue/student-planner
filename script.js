@@ -1,186 +1,66 @@
-<script>
-const days = ["mon","tue","wed","thu","fri","sat","sun"];
+const days = ["月", "火", "水", "木", "金"];
+const periods = 6;
 
+const tableBody = document.getElementById("table-body");
 
-// ========================
-// 保存
-// ========================
+// 表作成
+for (let i = 1; i <= periods; i++) {
 
-function saveTimetable(){
+let row = document.createElement("tr");
 
-const data = {};
+// 時限列
+let periodCell = document.createElement("th");
+periodCell.textContent = i + "限";
+row.appendChild(periodCell);
 
-for(let i=1;i<=6;i++){
+// 曜日列
+for (let j = 0; j < days.length; j++) {
 
-data["start"+i] = document.getElementById("start"+i)?.value;
-data["end"+i] = document.getElementById("end"+i)?.value;
+let cell = document.createElement("td");
 
-days.forEach(day=>{
+cell.dataset.day = j;
+cell.dataset.period = i;
 
-const el = document.getElementById(day+i);
-if(el){
-data[day+i] = el.value;
+cell.addEventListener("click", editCell);
+
+row.appendChild(cell);
 }
 
-// 教室
-const room = document.getElementById(day+i+"_room");
-if(room){
-data[day+i+"_room"] = room.value;
+tableBody.appendChild(row);
 }
 
-// メモ
-const memo = document.getElementById(day+i+"_memo");
-if(memo){
-data[day+i+"_memo"] = memo.value;
+loadData();
+
+function editCell(e) {
+
+let text = prompt("授業名を入力");
+
+if (text !== null) {
+e.target.textContent = text;
+saveData();
 }
 
-// 出席
-const attend = document.getElementById(day+i+"_attend");
-if(attend){
-data[day+i+"_attend"] = attend.textContent;
 }
 
-// 欠席
-const absent = document.getElementById(day+i+"_absent");
-if(absent){
-data[day+i+"_absent"] = absent.textContent;
+function saveData() {
+
+let data = [];
+
+document.querySelectorAll("td").forEach(cell => {
+data.push(cell.textContent);
+});
+
+localStorage.setItem("timetable", JSON.stringify(data));
 }
 
+function loadData() {
+
+let data = JSON.parse(localStorage.getItem("timetable"));
+
+if (!data) return;
+
+document.querySelectorAll("td").forEach((cell, index) => {
+cell.textContent = data[index];
 });
 
 }
-
-localStorage.setItem("timetable",JSON.stringify(data));
-
-}
-
-
-
-// ========================
-// 読み込み
-// ========================
-
-function loadTimetable(){
-
-const data = JSON.parse(localStorage.getItem("timetable") || "{}");
-
-for(let i=1;i<=6;i++){
-
-if(document.getElementById("start"+i))
-document.getElementById("start"+i).value = data["start"+i] || "";
-
-if(document.getElementById("end"+i))
-document.getElementById("end"+i).value = data["end"+i] || "";
-  
-days.forEach(day=>{
-
-const el = document.getElementById(day+i);
-
-if(el && data[day+i]){
-el.value = data[day+i];
-}
-
-// 教室
-const room = document.getElementById(day+i+"_room");
-if(room && data[day+i+"_room"]){
-room.value = data[day+i+"_room"];
-}
-
-// メモ
-const memo = document.getElementById(day+i+"_memo");
-if(memo && data[day+i+"_memo"]){
-memo.value = data[day+i+"_memo"];
-}
-
-// 出席
-const attend = document.getElementById(day+i+"_attend");
-if(attend && data[day+i+"_attend"]){
-attend.textContent = data[day+i+"_attend"];
-}
-
-// 欠席
-const absent = document.getElementById(day+i+"_absent");
-if(absent && data[day+i+"_absent"]){
-absent.textContent = data[day+i+"_absent"];
-}
-
-});
-
-}
-
-}
-
-
-
-// ========================
-// 出席
-// ========================
-
-function addAttend(id){
-const el=document.getElementById(id+"_attend");
-el.textContent=parseInt(el.textContent)+1;
-saveTimetable();
-}
-
-function subAttend(id){
-const el=document.getElementById(id+"_attend");
-let n=parseInt(el.textContent);
-if(n>0) el.textContent=n-1;
-saveTimetable();
-}
-
-
-// ========================
-// 欠席
-// ========================
-
-function addAbsent(id){
-const el=document.getElementById(id+"_absent");
-el.textContent=parseInt(el.textContent)+1;
-saveTimetable();
-}
-
-function subAbsent(id){
-const el=document.getElementById(id+"_absent");
-let n=parseInt(el.textContent);
-if(n>0) el.textContent=n-1;
-saveTimetable();
-}
-
-
-
-
-// ========================
-// 土日表示
-// ========================
-
-let weekendVisible = false;
-
-function toggleWeekend(){
-    weekendVisible = !weekendVisible;
-
-    document.querySelectorAll(".weekend").forEach(el=>{
-        el.style.display = weekendVisible ? "" : "none";
-    });
-}
-
-
-// ========================
-// 初期読み込み
-// ========================
-
-// ========================
-// 初期読み込み
-// ========================
-
-window.onload = function(){
-    loadTimetable();
-
-    // 最初は土日を非表示
-    document.querySelectorAll(".weekend").forEach(el=>{
-        el.style.display = "none";
-    });
-};
-</script>
-</body>
-</html>
