@@ -12,6 +12,14 @@ const startInput = document.getElementById("start-time");
 const endInput = document.getElementById("end-time");
 const saveBtn = document.getElementById("save-time");
 const modalTitle = document.getElementById("modal-title");
+const classModal = document.getElementById("class-modal");
+const subjectInput = document.getElementById("subject-input");
+const roomInput = document.getElementById("room-input");
+const memoInput = document.getElementById("memo-input");
+const saveClassBtn = document.getElementById("save-class");
+
+let currentDay = null;
+let currentClassPeriod = null;
 
 let currentPeriod = null;
 
@@ -48,7 +56,14 @@ let cell = document.createElement("td");
 cell.dataset.day = j;
 cell.dataset.period = i;
 
-cell.textContent = timetableData[i][j] || "";
+let data = timetableData[i][j];
+
+if (data) {
+cell.innerHTML = `
+<div>${data.subject || ""}</div>
+<small>${data.room || ""}</small>
+`;
+}
 
 cell.addEventListener("click", editCell);
 
@@ -76,19 +91,16 @@ cell.innerHTML = `
 
 function editCell(e) {
 
-let text = prompt("授業名を入力");
+currentDay = Number(e.target.dataset.day);
+currentClassPeriod = Number(e.target.dataset.period);
 
-if (text !== null) {
+let data = timetableData[currentClassPeriod][currentDay] || {};
 
-let day = Number(e.target.dataset.day);
-let period = Number(e.target.dataset.period);
+subjectInput.value = data.subject || "";
+roomInput.value = data.room || "";
+memoInput.value = data.memo || "";
 
-timetableData[period][day] = text;
-
-e.target.textContent = text;
-
-saveData();
-}
+classModal.style.display = "flex";
 }
 
 function editTime(e) {
@@ -160,3 +172,45 @@ timeData[i] = savedTime[i] || null;
 }
 }
 }
+
+saveClassBtn.addEventListener("click", () => {
+
+timetableData[currentClassPeriod][currentDay] = {
+subject: subjectInput.value,
+room: roomInput.value,
+memo: memoInput.value
+};
+
+updateTableDisplay();
+
+saveData();
+
+classModal.style.display = "none";
+});
+
+function updateTableDisplay() {
+
+document.querySelectorAll("td").forEach(cell => {
+
+let day = Number(cell.dataset.day);
+let period = Number(cell.dataset.period);
+
+let data = timetableData[period][day];
+
+if (!data) {
+cell.textContent = "";
+return;
+}
+
+cell.innerHTML = `
+<div>${data.subject || ""}</div>
+<small>${data.room || ""}</small>
+`;
+});
+}
+
+classModal.addEventListener("click", (e) => {
+if (e.target === classModal) {
+classModal.style.display = "none";
+}
+});
