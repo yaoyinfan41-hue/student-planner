@@ -24,6 +24,8 @@ createTable();
 
 function createTable() {
 
+tableBody.innerHTML = "";
+
 for (let i = 0; i < periods; i++) {
 
 let row = document.createElement("tr");
@@ -61,9 +63,10 @@ tableBody.appendChild(row);
 function updateTimeCell(cell, index) {
 
 let time = timeData[index];
-let text = "";
 
-if (time) {
+let text = "--:-- - --:--";
+
+if (time && time.start && time.end) {
 text = `${time.start}-${time.end}`;
 }
 
@@ -81,8 +84,8 @@ if (text !== null) {
 
 e.target.textContent = text;
 
-let day = e.target.dataset.day;
-let period = e.target.dataset.period;
+let day = parseInt(e.target.dataset.day);
+let period = parseInt(e.target.dataset.period);
 
 timetableData[period][day] = text;
 
@@ -92,11 +95,11 @@ saveData();
 
 function editTime(e) {
 
-currentPeriod = e.currentTarget.dataset.period;
+currentPeriod = parseInt(e.currentTarget.dataset.period);
 
 modal.style.display = "flex";
 
-modalTitle.textContent = `${parseInt(currentPeriod)+1}限の時間設定`;
+modalTitle.textContent = `${currentPeriod + 1}限の時間設定`;
 
 let data = timeData[currentPeriod];
 
@@ -112,7 +115,7 @@ end: endInput.value
 };
 
 document.querySelectorAll(".period-cell").forEach(cell => {
-if (cell.dataset.period == currentPeriod) {
+if (parseInt(cell.dataset.period) === currentPeriod) {
 updateTimeCell(cell, currentPeriod);
 }
 });
@@ -142,5 +145,5 @@ Array.from({ length: periods }, () => Array(days.length).fill(""));
 
 timeData =
 JSON.parse(localStorage.getItem("timeData")) ||
-Array(periods).fill("");
+Array(periods).fill(null);
 }
