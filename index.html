@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>時間割アプリ</title>
+<title>Student Planner</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -27,6 +27,21 @@
 <tbody id="table-body">
 </tbody>
 </table>
+</div>
+
+<!-- モーダル -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h2 id="modal-title">時間設定</h2>
+
+    <label>開始時刻</label>
+    <input type="time" id="start-time">
+
+    <label>終了時刻</label>
+    <input type="time" id="end-time">
+
+    <button id="save-time">保存</button>
+  </div>
 </div>
 
 <script src="script.js"></script>
