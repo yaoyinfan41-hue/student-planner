@@ -3,8 +3,8 @@ const periods = 6;
 
 const tableBody = document.getElementById("table-body");
 
-let timetableData = [];
-let timeData = [];
+let timetableData;
+let timeData;
 
 // モーダル
 const modal = document.getElementById("modal");
@@ -36,7 +36,6 @@ periodCell.className = "period-cell";
 periodCell.dataset.period = i;
 
 updateTimeCell(periodCell, i);
-
 periodCell.addEventListener("click", editTime);
 
 row.appendChild(periodCell);
@@ -63,7 +62,6 @@ tableBody.appendChild(row);
 function updateTimeCell(cell, index) {
 
 let time = timeData[index];
-
 let text = "--:-- - --:--";
 
 if (time && time.start && time.end) {
@@ -82,12 +80,12 @@ let text = prompt("授業名を入力");
 
 if (text !== null) {
 
-e.target.textContent = text;
-
 let day = parseInt(e.target.dataset.day);
 let period = parseInt(e.target.dataset.period);
 
 timetableData[period][day] = text;
+
+e.target.textContent = text;
 
 saveData();
 }
@@ -98,7 +96,6 @@ function editTime(e) {
 currentPeriod = parseInt(e.currentTarget.dataset.period);
 
 modal.style.display = "flex";
-
 modalTitle.textContent = `${currentPeriod + 1}限の時間設定`;
 
 let data = timeData[currentPeriod];
@@ -121,7 +118,6 @@ updateTimeCell(cell, currentPeriod);
 });
 
 saveData();
-
 modal.style.display = "none";
 });
 
@@ -139,11 +135,22 @@ localStorage.setItem("timeData", JSON.stringify(timeData));
 
 function loadData() {
 
-timetableData =
-JSON.parse(localStorage.getItem("timetable")) ||
-Array.from({ length: periods }, () => Array(days.length).fill(""));
+let savedTable = localStorage.getItem("timetable");
+let savedTime = localStorage.getItem("timeData");
 
-timeData =
-JSON.parse(localStorage.getItem("timeData")) ||
-Array(periods).fill(null);
+// 時間割データ
+if (savedTable) {
+timetableData = JSON.parse(savedTable);
+} else {
+timetableData = Array.from({ length: periods }, () =>
+Array(days.length).fill("")
+);
+}
+
+// 時間データ
+if (savedTime) {
+timeData = JSON.parse(savedTime);
+} else {
+timeData = Array(periods).fill(null);
+}
 }
