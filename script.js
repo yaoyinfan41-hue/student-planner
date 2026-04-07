@@ -31,6 +31,7 @@ init();
 function init() {
 loadData();
 createTable();
+updateTodayView();
 }
 
 function createTable() {
@@ -137,6 +138,7 @@ updateTimeCell(cell, currentPeriod);
 });
 
 saveData();
+updateTodayView();
 modal.style.display = "none";
 });
 
@@ -195,6 +197,7 @@ absent: Number(absentInput.value)
 };
 
 updateTableDisplay();
+updateTodayView();
 saveData();
 classModal.style.display = "none";
 
@@ -234,3 +237,43 @@ if (e.target === classModal) {
 classModal.style.display = "none";
 }
 });
+
+function updateTodayView() {
+
+const today = new Date().getDay();
+const todayIndex = today - 1;
+
+const todayView = document.getElementById("today-view");
+
+if (todayIndex < 0 || todayIndex > 4) {
+todayView.innerHTML = "今日は授業なし";
+return;
+}
+
+let html = "";
+
+for (let i = 0; i < periods; i++) {
+
+let data = timetableData[i][todayIndex];
+let time = timeData[i];
+
+let subject = data?.subject || "なし";
+let room = data?.room || "";
+
+let timeText = "--:--";
+if (time?.start) {
+timeText = time.start;
+}
+
+html += `
+<div class="today-card">
+<strong>${i+1}限 (${timeText})</strong><br>
+${subject}<br>
+<small>${room}</small>
+</div>
+`;
+}
+
+todayView.innerHTML = html;
+
+}
