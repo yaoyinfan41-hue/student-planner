@@ -49,3 +49,10 @@ font-size: 14px;
 }
 
 }
+
+.period-cell small {
+display: block;
+font-size: 12px;
+color: #666;
+margin-top: 4px;
+}
