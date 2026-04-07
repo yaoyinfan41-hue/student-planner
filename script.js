@@ -18,6 +18,8 @@ const roomInput = document.getElementById("room-input");
 const memoInput = document.getElementById("memo-input");
 const saveClassBtn = document.getElementById("save-class");
 const typeInput = document.getElementById("type-input");
+const attendInput = document.getElementById("attend-input");
+const absentInput = document.getElementById("absent-input");
 
 let currentDay = null;
 let currentClassPeriod = null;
@@ -157,7 +159,7 @@ let savedTime = JSON.parse(localStorage.getItem("timeData"));
 
 // 常に新規作成
 timetableData = Array.from({ length: periods }, () =>
-Array(days.length).fill("")
+Array.from({ length: days.length }, () => ({}))
 );
 
 timeData = Array(periods).fill(null);
@@ -191,18 +193,6 @@ type: typeInput.value,
 attend: Number(attendInput.value),
 absent: Number(absentInput.value)
 };
-
-updateTableDisplay();
-saveData();
-classModal.style.display = "none";
-
-});
-
-updateTableDisplay();
-saveData();
-classModal.style.display = "none";
-
-});
 
 updateTableDisplay();
 saveData();
