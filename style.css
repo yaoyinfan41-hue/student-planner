@@ -1,3 +1,255 @@
+* {
+  box-sizing: border-box;
+}
+
+/* ===== 全体 ===== */
+body {
+  font-family: 'Inter', 'Hiragino Kaku Gothic ProN', sans-serif;
+  background: #f4f1ec;
+  background-image: radial-gradient(#eae3da 1px, transparent 1px);
+  background-size: 20px 20px;
+  margin: 0;
+  padding: 20px;
+  padding-bottom: 80px; /* 下タブ分 */
+  color: #3e3e3e;
+}
+
+/* ===== ヘッダー ===== */
+.header {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 253, 249, 0.9);
+  backdrop-filter: blur(8px);
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0d8cc;
+  z-index: 100;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 18px;
+  color: #6b4f3b;
+}
+
+/* ===== コンテナ ===== */
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* ===== タイトル ===== */
+h1 {
+  font-size: 28px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #6b4f3b;
+}
+
+h2 {
+  margin-top: 35px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #8b6f47;
+  border-left: 4px solid #a67c52;
+  padding-left: 10px;
+}
+
+/* ===== テーブル ===== */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: auto;
+  margin-top: 10px;
+  background: #fffdf9;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 10px rgba(0,0,0,0.05),
+    0 1px 2px rgba(0,0,0,0.08);
+}
+
+th, td {
+  padding: 14px;
+  min-width: 80px;
+  height: 70px;
+  text-align: center;
+}
+
+th {
+  background: #f0e6d8;
+  font-weight: 600;
+  color: #5a4633;
+}
+
+td {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 10px;
+}
+
+td:hover {
+  background: #f7f2ea;
+  transform: scale(1.03);
+}
+
+/* ===== 時限 ===== */
+.period-cell {
+  background: #f9f6f1;
+  font-weight: 600;
+}
+
+.period-cell small {
+  display: block;
+  font-size: 12px;
+  color: #888;
+}
+
+/* ===== 種別カラー ===== */
+.required {
+  background: #fbe4e0;
+}
+
+.elective {
+  background: #e6eef7;
+}
+
+.lab {
+  background: #e6f5ea;
+}
+
+/* ===== 今日の授業 ===== */
+.today-card {
+  background: #fffdf9;
+  border: 1px solid #eee5dc;
+  padding: 12px;
+  margin: 10px auto;
+  border-radius: 12px;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  text-align: left;
+  transition: all 0.25s ease;
+}
+
+.today-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ===== オンデマンド ===== */
+#online-section {
+  margin-top: 30px;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.input-area input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d8cfc4;
+  background: #fff;
+}
+
+.input-area input:focus {
+  border-color: #a67c52;
+  outline: none;
+}
+
+.input-area button {
+  padding: 10px 18px;
+  border: none;
+  background: #a67c52;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.input-area button:hover {
+  background: #8c653f;
+}
+
+/* ===== オンラインカード ===== */
+#online-list {
+  max-width: 500px;
+  margin: auto;
+}
+
+.online-card {
+  background: #fffdf9;
+  border: 1px solid #eee5dc;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.online-card:hover {
+  transform: translateY(-4px);
+}
+
+.online-card button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: #c97c5d;
+  border: none;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ===== モーダル ===== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fffdf9;
+  padding: 25px;
+  border-radius: 14px;
+  width: 320px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #d8cfc4;
+}
+
+.modal-content button {
+  width: 100%;
+  padding: 12px;
+  background: #a67c52;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
 /* ===== 下タブ ===== */
 .bottom-nav {
   position: fixed;
@@ -19,8 +271,14 @@
   color: #6b4f3b;
 }
 
-/* スマホ入力欄改善 */
+/* ===== スマホ対応 ===== */
 @media (max-width: 600px) {
+  th, td {
+    padding: 10px;
+    height: 60px;
+    font-size: 14px;
+  }
+
   .input-area {
     flex-direction: column;
     align-items: stretch;
@@ -30,8 +288,9 @@
   .input-area button {
     width: 100%;
   }
+}
 
-  body {
-    padding-bottom: 70px; /* 下タブ分余白 */
-  }
+/* ===== スクロール ===== */
+html {
+  scroll-behavior: smooth;
 }
